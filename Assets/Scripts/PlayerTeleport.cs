@@ -36,8 +36,12 @@ public class PlayerTeleport : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        Ray raycast = new Ray(origin.position, Vector3.down);
+        RaycastHit floor;
+        bool ray = Physics.Raycast(raycast, out floor, 1000.0f);
+        if(ray)
+            this.transform.position = floor.point + playerHeight * Vector3.up;
+    }
 	
 	// Update is called once per frame
 	void Update () {
