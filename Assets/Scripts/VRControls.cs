@@ -7,12 +7,19 @@ using UnityEngine;
 public class VRControls : MonoBehaviour {    
     public static VRControls instance;
 
+    [SerializeField]
+    Transform rightHand;
+
+    [SerializeField]
+    Transform leftHand;
+
     public struct Hand
     {
         public bool triggerPressed;
         public bool triggerTouched;
         public bool gripPressed;
-        public bool thumbTouch;     
+        public bool thumbTouch;
+        public Transform transform;
     };
 
     public Hand right;
@@ -22,6 +29,9 @@ public class VRControls : MonoBehaviour {
     {
         if (!instance)
             instance = this;
+
+        right.transform = rightHand;
+        left.transform = leftHand;
     }
 
     // Use this for initialization

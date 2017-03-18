@@ -19,13 +19,6 @@ public class PlayerTeleport : MonoBehaviour {
     private int curveDensity = 10;
 
     [SerializeField]
-    private GameObject test;
-    [SerializeField]
-    private GameObject test1;
-    [SerializeField]
-    private GameObject test2;
-
-    [SerializeField]
     private LineRenderer curve;
 
     private bool renderCurve = false;
