@@ -65,6 +65,7 @@ public class Player : MonoBehaviour {
 
     public void Eat(float amount)
     {
+        Debug.Log("Ate " + amount);
         hunger = Mathf.Clamp(hunger + amount, 0.0f, maxHunger);
     }    
 

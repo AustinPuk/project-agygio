@@ -1,5 +1,6 @@
 ﻿public enum Effects
 {
+    NEUTRAL,
     WATER,
     LIGHTNING,
     FIRE,

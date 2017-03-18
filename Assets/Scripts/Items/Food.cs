@@ -21,13 +21,15 @@ public class Food : Item
         timer = eatTime;
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "EatingRegion")
+    private void OnTriggerStay(Collider other)
+    {        
+        if (other.gameObject.tag == "EatingRegion")
         {            
             if (!isEating)
             {
+                Debug.Log("Food eating");
                 isEating = true;
+                timer = eatTime;
                 // Start Particle System
                 // Start Audio System
             }
@@ -37,17 +39,18 @@ public class Food : Item
             }
             else
             {
+                Debug.Log("Food has been eaten");
                 OnDrop(); // Drop Item first before destroying
-                // Player.instance.consume(100);
+                Player.instance.Eat(100);                
                 // Play Eat Audio
                 Destroy(this);
             }            
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.tag == "EatingRegion")
+        if (other.gameObject.tag == "EatingRegion")
         {
             isEating = false;
             timer = eatTime;

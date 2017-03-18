@@ -31,14 +31,14 @@ public class PlayerTeleport : MonoBehaviour {
     void Start () {
         Ray raycast = new Ray(origin.position, Vector3.down);
         RaycastHit floor;
-        bool ray = Physics.Raycast(raycast, out floor, 1000.0f);
+        bool ray = Physics.Raycast(raycast, out floor, 1000.0f, 1 << LayerMask.NameToLayer("Terrain"));
         if(ray)
             this.transform.position = floor.point + playerHeight * Vector3.up;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (VRControls.instance.right.gripPressed && VRControls.instance.right.triggerPressed)
+        if (VRControls.instance.rightHand.gripPressed && VRControls.instance.rightHand.triggerPressed)
         {
             Vector3 jointPosition = ForwardBeam();
             Vector3 downPosition = DownBeam(jointPosition);
@@ -55,8 +55,7 @@ public class PlayerTeleport : MonoBehaviour {
 	}
 
     private Vector3 ForwardBeam()
-    {        
-        float attachedRotation = Vector3.Dot(Vector3.up, origin.forward.normalized);
+    {                
         float calculatedLength = maxDistance;
         Vector3 useForward = origin.forward;
 

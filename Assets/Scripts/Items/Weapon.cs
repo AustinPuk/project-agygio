@@ -14,11 +14,11 @@ public class Weapon : Item {
     [SerializeField]
     private Effects baseEffect;
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
-            if (collision.relativeVelocity.magnitude > minimumVelocity)
+            if (Vector3.Magnitude(GetComponent<Rigidbody>().velocity) > minimumVelocity)
             {
                 //collision.gameObject.GetComponent<Enemy>().takeDamage(baseDamage, baseEffect);
             }

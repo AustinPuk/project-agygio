@@ -8,30 +8,15 @@ public class VRControls : MonoBehaviour {
     public static VRControls instance;
 
     [SerializeField]
-    Transform rightHand;
+    public PlayerHand rightHand;
 
     [SerializeField]
-    Transform leftHand;
-
-    public struct Hand
-    {
-        public bool triggerPressed;
-        public bool triggerTouched;
-        public bool gripPressed;
-        public bool thumbTouch;
-        public Transform transform;
-    };
-
-    public Hand right;
-    public Hand left;
+    public PlayerHand leftHand;
 
     private void Awake()
     {
         if (!instance)
             instance = this;
-
-        right.transform = rightHand;
-        left.transform = leftHand;
     }
 
     // Use this for initialization
@@ -42,38 +27,38 @@ public class VRControls : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (OVRInput.Get(OVRInput.RawButton.RHandTrigger))
-            right.gripPressed = true;
+            rightHand.gripPressed = true;
         else
-            right.gripPressed = false;        
+            rightHand.gripPressed = false;        
         if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
-            right.triggerPressed = true;
+            rightHand.triggerPressed = true;
         else
-            right.triggerPressed = false;
+            rightHand.triggerPressed = false;
         if (OVRInput.Get(OVRInput.RawTouch.RIndexTrigger))
-            right.triggerTouched = true;
+            rightHand.triggerTouched = true;
         else
-            right.triggerTouched = false;
+            rightHand.triggerTouched = false;
         if (OVRInput.Get(OVRInput.RawNearTouch.RThumbButtons))
-            right.thumbTouch = true;
+            rightHand.thumbTouch = true;
         else
-            right.thumbTouch = false;
+            rightHand.thumbTouch = false;
 
         if (OVRInput.Get(OVRInput.RawButton.LHandTrigger))
-            left.gripPressed = true;
+            leftHand.gripPressed = true;
         else
-            left.gripPressed = false;
+            leftHand.gripPressed = false;
         if (OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
-            left.triggerPressed = true;
+            leftHand.triggerPressed = true;
         else
-            left.triggerPressed = false;
+            leftHand.triggerPressed = false;
         if (OVRInput.Get(OVRInput.RawTouch.LIndexTrigger))
-            left.triggerTouched = true;
+            leftHand.triggerTouched = true;
         else
-            left.triggerTouched = false;
+            leftHand.triggerTouched = false;
         if (OVRInput.Get(OVRInput.RawNearTouch.LThumbButtons))
-            left.thumbTouch = true;
+            leftHand.thumbTouch = true;
         else
-            left.thumbTouch = false;
+            leftHand.thumbTouch = false;
 
         /*
         Debug.Log("RightGripPress: " + right.gripPressed);
