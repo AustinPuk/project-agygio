@@ -12,6 +12,9 @@ public class Food : Item
     [SerializeField]
     private float amount;
 
+    [SerializeField]
+    ParticleSystem particles;
+
     private bool isEating;
     private float timer;
 
@@ -22,7 +25,10 @@ public class Food : Item
     }
 
     private void OnTriggerStay(Collider other)
-    {        
+    {
+        if (!isActive)
+            return;
+
         if (other.gameObject.tag == "EatingRegion")
         {            
             if (!isEating)
@@ -31,6 +37,7 @@ public class Food : Item
                 isEating = true;
                 timer = eatTime;
                 // Start Particle System
+                particles.Play();
                 // Start Audio System
             }
             if (timer > 0.0f)
@@ -41,21 +48,25 @@ public class Food : Item
             {
                 Debug.Log("Food has been eaten");
                 OnDrop(); // Drop Item first before destroying
-                Player.instance.Eat(100);                
+                Player.instance.Eat(amount);                
                 // Play Eat Audio
-                Destroy(this);
+                Destroy(this.gameObject);
             }            
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (!isActive)
+            return;
+
         if (other.gameObject.tag == "EatingRegion")
         {
             isEating = false;
             timer = eatTime;
 
             // Stop Particle System
+            particles.Stop();
         }
     }
 

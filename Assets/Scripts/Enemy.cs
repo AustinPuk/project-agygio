@@ -11,8 +11,14 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        agent.destination = Player.instance.gameObject.transform.position;
+        //NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        //agent.destination = Player.instance.gameObject.transform.position;
 
+    }
+
+    public void TakeDamage(float amount, Effects type)
+    {
+        Debug.Log("Taking Damage");
+        Destroy(this.gameObject);
     }
 }

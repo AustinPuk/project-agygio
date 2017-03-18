@@ -58,7 +58,8 @@ public abstract class Item : MonoBehaviour
     }
 
     public virtual void OnGrab(PlayerHand hand)
-    {          
+    {
+        Debug.Log("Grabbing");
         isActive = true;
         heldHand = hand;
         transform.SetParent(hand.gameObject.transform);
@@ -72,6 +73,7 @@ public abstract class Item : MonoBehaviour
 
     public virtual void OnDrop()
     {
+        Debug.Log("Dropping");
         if (deactivateOnDrop)
             isActive = false;
 
@@ -79,6 +81,6 @@ public abstract class Item : MonoBehaviour
         transform.SetParent(null);
         
         GetComponent<BoxCollider>().isTrigger = false;  // Allows item to fall to the floor
-        GetComponent<Rigidbody>().isKinematic = false;
+        //GetComponent<Rigidbody>().isKinematic = false;
     }    
 }

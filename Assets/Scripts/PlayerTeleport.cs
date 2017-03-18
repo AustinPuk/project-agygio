@@ -26,12 +26,15 @@ public class PlayerTeleport : MonoBehaviour {
     private RaycastHit destinationHit = new RaycastHit();    
     protected Vector3 fixedForwardBeamForward;
 
+    LayerMask terrainOnly;
+
 
     // Use this for initialization
     void Start () {
+        terrainOnly = 1 << LayerMask.NameToLayer("Terrain");
         Ray raycast = new Ray(origin.position, Vector3.down);
         RaycastHit floor;
-        bool ray = Physics.Raycast(raycast, out floor, 1000.0f, 1 << LayerMask.NameToLayer("Terrain"));
+        bool ray = Physics.Raycast(raycast, out floor, 1000.0f, terrainOnly);
         if(ray)
             this.transform.position = floor.point + playerHeight * Vector3.up;
     }
@@ -123,7 +126,7 @@ public class PlayerTeleport : MonoBehaviour {
         {
                 origin.position,
                 jointPosition,
-                downPosition,                
+                downPosition,      
         };
 
         curve.numPositions = curveDensity;

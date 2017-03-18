@@ -13,16 +13,30 @@ public class Weapon : Item {
 
     [SerializeField]
     private Effects baseEffect;
+
+    private float currentVelocity = 0.0f;
+    private Vector3 prevPosition = new Vector3(0.0f, 0.0f, 0.0f);
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.GetComponent<Enemy>())
         {
-            if (Vector3.Magnitude(GetComponent<Rigidbody>().velocity) > minimumVelocity)
+            //Debug.Log("Weapon Found Enemy: " + Vector3.Magnitude(GetComponent<Rigidbody>().velocity));
+            if (currentVelocity > minimumVelocity)
             {
-                //collision.gameObject.GetComponent<Enemy>().takeDamage(baseDamage, baseEffect);
+                other.gameObject.GetComponent<Enemy>().TakeDamage(baseDamage, baseEffect);
             }
         }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        currentVelocity = Vector3.Magnitude((transform.position - prevPosition) / Time.deltaTime);
+        prevPosition = transform.position;
+
+        Debug.Log("Current Velocity: " + currentVelocity);
     }
 
     public override void OnPress()
