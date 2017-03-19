@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenInventory : MonoBehaviour {
+public class Menu : MonoBehaviour {
+
+    public static bool isOpen;
 
     [SerializeField]
     private GameObject scroll;
@@ -21,6 +23,7 @@ public class OpenInventory : MonoBehaviour {
     {
         originalPos = transform.localPosition;
         currentDist = 0.0f;
+        isOpen = false;
 	}
 
     private void Update()
@@ -40,12 +43,14 @@ public class OpenInventory : MonoBehaviour {
             {
                 Debug.Log("Opening Scroll");
                 scroll.SetActive(true);
+                isOpen = true;
             }
             else
             {
                 Debug.Log("Closing Scroll");
                 scroll.SetActive(false);
                 this.transform.localPosition = originalPos;
+                isOpen = false;
             }
             hand = null;
         }

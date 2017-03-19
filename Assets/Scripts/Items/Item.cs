@@ -5,21 +5,30 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
 public abstract class Item : MonoBehaviour
 {
-    //public string name = "Test";
+    public string itemName = "Test";
+    public string description = "Test";
 
     [SerializeField]
     protected Transform grabLocation;
 
     [SerializeField]
+    protected MeshRenderer highlight;
+
+    [SerializeField]
     protected bool initialActiveState;
     
     [SerializeField]
-    protected bool deactivateOnDrop;    
+    protected bool deactivateOnDrop;
 
     protected bool isActive;    
     protected PlayerHand heldHand;
 
-    private bool holding;
+    private bool holding; // If holding down the trigger
+
+    public bool isHeld; // If currently being held by a hand
+    public bool inBackpack;
+    public bool canStore;    
+    public bool isSelected; // If it is selected within the inventory
 
     public abstract void OnPress();
     public abstract void OnHold();
@@ -29,11 +38,21 @@ public abstract class Item : MonoBehaviour
     protected virtual void Awake()
     {
         isActive = initialActiveState;
+        inBackpack = false;
         holding = false;
+        canStore = false;        
     }
 
     protected virtual void Update()
     {
+        if (isSelected)
+            highlight.enabled = true;
+        else
+            highlight.enabled = false;
+
+        if (inBackpack)
+            return;
+
         if (isActive)
             OnPassive();
 
@@ -59,8 +78,15 @@ public abstract class Item : MonoBehaviour
 
     public virtual void OnGrab(PlayerHand hand)
     {
+        if (inBackpack)
+        {
+            Debug.Log("Can't grab item in backpack");
+            return;
+        }
+
         Debug.Log("Grabbing");
         isActive = true;
+        isHeld = true;
         heldHand = hand;
         transform.SetParent(hand.gameObject.transform);
         transform.localPosition = grabLocation.localPosition;
@@ -77,8 +103,12 @@ public abstract class Item : MonoBehaviour
         if (deactivateOnDrop)
             isActive = false;
 
+        isHeld = false;
         heldHand = null;
         transform.SetParent(null);
+
+        if (canStore)
+            Backpack.instance.AddItem(this);
         
         GetComponent<BoxCollider>().isTrigger = false;  // Allows item to fall to the floor
         //GetComponent<Rigidbody>().isKinematic = false;
