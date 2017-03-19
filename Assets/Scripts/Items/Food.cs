@@ -24,6 +24,16 @@ public class Food : Item
         timer = eatTime;
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        if (inBackpack && isEating)
+        {
+            isEating = false;
+            particles.Stop();
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (!isActive)

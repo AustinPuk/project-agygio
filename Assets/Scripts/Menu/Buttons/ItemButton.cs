@@ -27,6 +27,7 @@ public class ItemButton : MyButton {
         }
         else
         {
+            Backpack.instance.RemoveItem(item);
             item.OnGrab(VRControls.instance.rightHand);
         }        
     }

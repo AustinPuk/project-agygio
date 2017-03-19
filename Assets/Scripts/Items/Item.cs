@@ -4,9 +4,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
 public abstract class Item : MonoBehaviour
-{
+{    
     public string itemName = "Test";
-    public string description = "Test";
+    public ItemType itemType;
+    public string description = "Test";    
 
     [SerializeField]
     protected Transform grabLocation;

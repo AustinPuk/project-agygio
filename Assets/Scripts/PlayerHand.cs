@@ -15,6 +15,7 @@ public class PlayerHand : MonoBehaviour {
     public bool thumbTouch;
 
     private Item heldObject;
+    private bool holdingTrigger; // Prevents multiple inputs when holding down button
 
     LayerMask windowOnly;
     LayerMask buttonsOnly;
@@ -27,7 +28,10 @@ public class PlayerHand : MonoBehaviour {
     
     
     private void Update ()
-    {        
+    {
+        if (holdingTrigger && !triggerPressed)
+            holdingTrigger = false;
+
         if (heldObject)
             GetComponent<Renderer>().enabled = false;
         else
@@ -99,7 +103,7 @@ public class PlayerHand : MonoBehaviour {
             pointer.SetPosition(1, hit.point);
             pointer.enabled = true;
 
-            if (this.triggerPressed)
+            if (!holdingTrigger && this.triggerPressed)
             {
                 if (Physics.Raycast(transform.position, transform.forward, out hit, 100.0f, buttonsOnly))
                 {
@@ -107,6 +111,8 @@ public class PlayerHand : MonoBehaviour {
                     {
                         Debug.Log("Pressing Button " + hit.collider.gameObject.name);
                         hit.collider.gameObject.GetComponent<MyButton>().OnClick();
+                        holdingTrigger = true;
+
                     }
 
                 }
@@ -119,5 +125,10 @@ public class PlayerHand : MonoBehaviour {
             pointer.enabled = false;
         }
         
+    }
+
+    public void grabItem(Item item)
+    {
+
     }
 }

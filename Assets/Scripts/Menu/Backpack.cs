@@ -21,7 +21,10 @@ public class Backpack : MonoBehaviour {
     [SerializeField]
     private float spacing;
 
-    public List<Item> items;    
+    public List<Item> items;
+
+    private Item selectedItem;
+    public ItemType filterType;
 
     private void Awake()
     {
@@ -31,7 +34,7 @@ public class Backpack : MonoBehaviour {
 	
 	void Start ()
     {
-        UpdateInventory();
+        UpdateInventory(filterType);
 		
 	}
 	
@@ -47,11 +50,11 @@ public class Backpack : MonoBehaviour {
         if (!items.Contains(item))
             items.Add(item);
 
+        item.transform.SetParent(hidden.transform);
+
         item.inBackpack = true;
 
-        UpdateInventory();
-
-        item.transform.SetParent(hidden.transform);
+        UpdateInventory(filterType);        
 
         // Adjust Scale
         float newScale = spacing / Vector3.Magnitude(item.GetComponent<BoxCollider>().size);
@@ -65,10 +68,11 @@ public class Backpack : MonoBehaviour {
         items.Remove(item);
 
         item.inBackpack = false;
+        item.isSelected = false;
 
-        UpdateInventory();
+        UpdateInventory(filterType);
 
-        item.transform.SetParent(null);
+        item.transform.SetParent(null);        
         
         item.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
@@ -79,18 +83,28 @@ public class Backpack : MonoBehaviour {
         {
             Debug.Log("Backpack: Error, selected item not in backpack");
             return;
-        }
+        }        
 
-        // Update Info Sheet with Info from Item
+        if(selectedItem)
+            selectedItem.isSelected = false;
 
+        selectedItem = item;
         item.isSelected = true;
 
         title.text = item.itemName;
         description.text = item.description;
     }
 
-    void UpdateInventory()
+    public void ChangeFilter(ItemType type)
     {
+        filterType = type;
+        UpdateInventory(filterType);
+    }    
+
+    void UpdateInventory(ItemType filterType)
+    {
+        ClearGrid();
+
         // Get bounds of grid region, despite rotations
         BoxCollider gridBox = gridArea.GetComponent<BoxCollider>();
 
@@ -112,6 +126,9 @@ public class Backpack : MonoBehaviour {
 
         for (int i = 0; i < items.Count; i++)
         {
+            if (filterType != ItemType.NONE && items[i].itemType != filterType)
+                continue;
+
             //Horizontal Spacing
             if (i == 0)
                 spot = spot + (spacing / 2.0f) * horizontalVector;
@@ -131,6 +148,13 @@ public class Backpack : MonoBehaviour {
             
             items[i].transform.position = spot;
             items[i].transform.SetParent(gridArea.transform);
+        }
+    }
+
+    void ClearGrid()
+    {
+        foreach (Item item in items){
+            item.transform.SetParent(hidden.transform);
         }
     }
 }
