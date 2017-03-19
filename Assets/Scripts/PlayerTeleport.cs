@@ -41,7 +41,7 @@ public class PlayerTeleport : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (VRControls.instance.rightHand.gripPressed && VRControls.instance.rightHand.triggerPressed)
+        if (VRControls.instance.leftHand.gripPressed && !VRControls.instance.leftHand.triggerPressed)
         {
             Vector3 jointPosition = ForwardBeam();
             Vector3 downPosition = DownBeam(jointPosition);
@@ -49,9 +49,14 @@ public class PlayerTeleport : MonoBehaviour {
             dest = downPosition;
             renderCurve = true;      
         }		
-        else if (renderCurve == true)
+        else if (VRControls.instance.leftHand.gripPressed && VRControls.instance.leftHand.triggerPressed && renderCurve == true)
         {            
             transform.position = new Vector3(dest.x, dest.y + playerHeight, dest.z);
+            renderCurve = false;
+            curve.enabled = false;
+        }
+        else
+        {
             renderCurve = false;
             curve.enabled = false;
         }

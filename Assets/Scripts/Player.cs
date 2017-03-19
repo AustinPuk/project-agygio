@@ -19,8 +19,8 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float baseHealthRegen;
 
-    private float health;
-    private float hunger;
+    public float health;
+    public float hunger;
 
     void Awake()
     {
@@ -29,7 +29,9 @@ public class Player : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {        		
+	void Start () {
+        health = maxHealth;
+        hunger = maxHunger;
 	}
 	
 	// Update is called once per frame
@@ -43,8 +45,9 @@ public class Player : MonoBehaviour {
 
     void Regen(float deltaTime)
     {
-        hunger -= (hungerRate / 60.0f);
+        hunger = Mathf.Clamp(hunger  - (hungerRate / 60.0f) * deltaTime, 0, maxHunger);
         //health += hunger * some logarithmic modifier * baseHealthRegen;
+        health = Mathf.Clamp(health + baseHealthRegen / 60.0f, 0.0f, maxHealth);
     }
 
     void CheckDeath()
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour {
     /***************************** Player Event Functions *************************/
     void OnDeath()
     {
+        Debug.Log("Player Dies");
         // Dies
         // Some sort of method for transitioning to a main menu / title screen / DARKNESS
     }
@@ -71,6 +75,7 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(float amount, Effects type)
     {
+        Debug.Log("Player: Take Damage");
         health -= amount;
 
         // TODO: take type into account, and possibly even armor. 

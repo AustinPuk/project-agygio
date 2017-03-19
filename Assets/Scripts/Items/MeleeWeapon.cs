@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : Item {
+public class MeleeWeapon : Item {
 
     [SerializeField]
     private float minimumVelocity = 0.0f;
@@ -14,7 +14,7 @@ public class Weapon : Item {
     [SerializeField]
     private Effects baseEffect;
 
-    private float currentVelocity = 0.0f;
+    private Vector3 currentVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     private Vector3 prevPosition = new Vector3(0.0f, 0.0f, 0.0f);
     
     private void OnTriggerEnter(Collider other)
@@ -22,7 +22,7 @@ public class Weapon : Item {
         if (other.gameObject.GetComponent<Enemy>())
         {
             //Debug.Log("Weapon Found Enemy: " + Vector3.Magnitude(GetComponent<Rigidbody>().velocity));
-            if (currentVelocity > minimumVelocity)
+            if (Vector3.Magnitude(currentVelocity) > minimumVelocity)
             {
                 other.gameObject.GetComponent<Enemy>().TakeDamage(baseDamage, baseEffect);
             }
@@ -33,10 +33,10 @@ public class Weapon : Item {
     {
         base.Update();
 
-        currentVelocity = Vector3.Magnitude((transform.position - prevPosition) / Time.deltaTime);
+        currentVelocity = (transform.position - prevPosition) / Time.deltaTime;
         prevPosition = transform.position;
 
-        Debug.Log("Current Velocity: " + currentVelocity);
+        //Debug.Log("Current Velocity: " + currentVelocity);
     }
 
     public override void OnPress()
