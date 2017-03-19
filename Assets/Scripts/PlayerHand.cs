@@ -13,8 +13,6 @@ public class PlayerHand : MonoBehaviour {
 
     private Item heldObject;
 
-    private float sphereOffset = 0.05f;
-
     private void OnTriggerStay(Collider collision)
     {
         // For Grabbing an Object

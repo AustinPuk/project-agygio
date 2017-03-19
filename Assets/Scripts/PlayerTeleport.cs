@@ -41,7 +41,7 @@ public class PlayerTeleport : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (VRControls.instance.leftHand.gripPressed && !VRControls.instance.leftHand.triggerPressed)
+        if (VRControls.instance.leftHand.gripPressed && !VRControls.instance.leftHand.triggerTouched)
         {
             Vector3 jointPosition = ForwardBeam();
             Vector3 downPosition = DownBeam(jointPosition);

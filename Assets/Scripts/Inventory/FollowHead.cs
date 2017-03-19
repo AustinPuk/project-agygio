@@ -19,7 +19,7 @@ public class FollowHead : MonoBehaviour {
         Vector3 newLocation = new Vector3(playerHead.position.x, this.transform.position.y, playerHead.position.z);        
         Vector3 rotation = playerHead.rotation.eulerAngles;
         Quaternion newRotation = Quaternion.Euler(0.0f, rotation.y, 0.0f);
-        Debug.Log("Rot: " + rotation);  
+        //Debug.Log("Rot: " + rotation);  
         this.transform.position = Vector3.Lerp(this.transform.position, newLocation, rate);
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, newRotation, rate);
 	}
