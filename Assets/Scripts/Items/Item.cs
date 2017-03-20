@@ -7,7 +7,7 @@ public abstract class Item : MonoBehaviour
 {    
     public string itemName = "Test";
     public ItemType itemType;
-    public string description = "Test";    
+    public string description = "Test";
 
     [SerializeField]
     protected Transform grabLocation;    
@@ -23,7 +23,15 @@ public abstract class Item : MonoBehaviour
     
     [SerializeField]
     protected bool deactivateOnDrop;
-    
+
+    [Header("Crafting")]
+    public bool isDiscovered;
+    public bool craftMenuItem;
+    public Item requiredItemOne;
+    public int numberItemOne;
+    public Item requiredItemTwo;
+    public int numberItemTwo;
+
     [Header("Debug View")]
     public bool isHeld; // If currently being held by a hand
     public bool inBackpack;
@@ -43,6 +51,7 @@ public abstract class Item : MonoBehaviour
     {
         isActive = initialActiveState;
         inBackpack = false;
+        isDiscovered = false;
         holding = false;
         canStore = false;        
     }
@@ -80,13 +89,13 @@ public abstract class Item : MonoBehaviour
         }
     }
 
-    public virtual void OnGrab(PlayerHand hand)
+    public virtual bool OnGrab(PlayerHand hand)
     {
-        if (inBackpack)
+        if (inBackpack || craftMenuItem)
         {
-            Debug.Log("Can't grab item in backpack");
-            return;
-        }
+            Debug.Log("Can't grab item");
+            return false;
+        }        
 
         Debug.Log("Grabbing");
         isActive = true;
@@ -98,6 +107,8 @@ public abstract class Item : MonoBehaviour
         
         GetComponent<BoxCollider>().isTrigger = true;   // Prevents item from pushing back items and stuff. 
         GetComponent<Rigidbody>().isKinematic = true;   // Prevents item from being affected by gravity
+
+        return true;
 
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour
     public float regenRate;  // Health gained per minute
     public float baseDamage; // Only for melee
 
-    private NavMeshAgent agent;
+    private EnemyMovement agent;
     private Transform target;
 
     private float patrolTimer;
@@ -65,17 +65,14 @@ public class Enemy : MonoBehaviour
     public float test1;
     private float testTimer;
 
-    private void Awake()
-    {
-        agent = GetComponent<NavMeshAgent>();
-    }
-
     void Start ()
     {
         ChangeLevel(level);
         health = maxHealth;
         patrolTimer = patrolInterval;
         attackTimer = 0.0f;
+
+        agent = GetComponent<EnemyMovement>();
     }
 		
 	void Update ()
@@ -90,7 +87,6 @@ public class Enemy : MonoBehaviour
             Patrol();
 
     }   
-
 
     /**************************** Update Functions ******************************/
 
@@ -155,6 +151,7 @@ public class Enemy : MonoBehaviour
                 Debug.Log("Enemy: Attacking");
                 float dmg = Random.Range(baseDamage + (-10 + (DEX * 1.5f)), baseDamage + (DEX * 1.5f)); // Dex increases accuracy of stronger attacks
                 target.GetComponent<Player>().TakeDamage(dmg, damageType);
+                Stop();
             }
             else
             {
@@ -191,7 +188,7 @@ public class Enemy : MonoBehaviour
 
     void Move(Vector3 loc)
     {
-        Debug.Log("Enemy: Moving to : " + loc);
+        //Debug.Log("Enemy: Moving to : " + loc);        
         agent.SetDestination(loc);
         agent.Resume();
     }

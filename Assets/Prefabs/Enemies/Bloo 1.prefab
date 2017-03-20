@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4477707600911530}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4054026981871122}
   - component: {fileID: 33762795009873462}
   - component: {fileID: 23459999563584544}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Icosphere_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4692463606728132}
   - component: {fileID: 33455451273754904}
   - component: {fileID: 23858138774905918}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Icosphere_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4743681369269188}
   - component: {fileID: 33774531779637702}
   - component: {fileID: 23051288207013734}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Icosphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4540215238060962}
   - component: {fileID: 33171730961369728}
   - component: {fileID: 23957769899649388}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Icosphere_005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4238867713774068}
   - component: {fileID: 95254216881962944}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bloo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,11 +118,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4348472293772124}
-  - component: {fileID: 195855504179647322}
   - component: {fileID: 54012397097222452}
   - component: {fileID: 65849387719387370}
   - component: {fileID: 114499732443895900}
-  m_Layer: 0
+  - component: {fileID: 114543000528676134}
+  m_Layer: 11
   m_Name: Bloo 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4726517518498730}
   - component: {fileID: 33991707244129876}
   - component: {fileID: 23537728983581436}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Icosphere_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,14 +183,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843993838453764}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.75, y: 14.26, z: 16.21}
+  m_LocalRotation: {x: -0, y: 0.6109638, z: -0, w: 0.7916586}
+  m_LocalPosition: {x: 34.47, y: 10.118, z: 2.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4477707600911530}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 75.318, z: 0}
 --- !u!4 &4477707600911530
 Transform:
   m_ObjectHideFlags: 1
@@ -458,9 +458,9 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 2
 --- !u!65 &65849387719387370
 BoxCollider:
@@ -469,11 +469,11 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843993838453764}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.5425186, z: 1}
+  m_Center: {x: 0.00000899473, y: -0.2712593, z: -0.0000023566267}
 --- !u!95 &95254216881962944
 Animator:
   serializedVersion: 3
@@ -513,32 +513,26 @@ MonoBehaviour:
   damageType: 0
   projectile: {fileID: 0}
   projectileLoc: {fileID: 0}
-  STR: 7
-  DEX: 7
-  CON: 7
+  STR: 5
+  DEX: 5
+  CON: 5
   maxHealth: 0
   health: 0
   regenRate: 0
   baseDamage: 0
   test: 0
   test1: 30
---- !u!195 &195855504179647322
-NavMeshAgent:
+--- !u!114 &114543000528676134
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843993838453764}
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Speed: 1
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1.3
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dfdab37b337c604ca0d808a97927842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  height: 1.2
+  stopDistance: 1.5

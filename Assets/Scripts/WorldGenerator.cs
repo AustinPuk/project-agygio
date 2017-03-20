@@ -54,6 +54,8 @@ public class WorldGenerator : MonoBehaviour {
         GenerateHeightMap(HEIGHT_MAP_SIZE, HEIGHT_MAP_MAX, VILLAGE_DIAMETER, HEIGHT_RANDOMNESS_SCALE, true, TERRAIN_SMOOTHNESS);
         GenerateTerrain(TERRAIN_SIZE, TERRAIN_RESOLUTION, 0.0f, Mathf.Infinity);
         GenerateTrees(TERRAIN_SIZE, NUMBER_TREES);
+
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     // Use this for initialization

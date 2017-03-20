@@ -6,13 +6,13 @@ using UnityEngine;
 public class FilterButton : MyButton {
 
     [SerializeField]
-    private GameObject window;
+    private Window window;
 
     [SerializeField]
     private ItemType type;
 
     public override void OnClick(PlayerHand hand)
     {
-        window.GetComponent<Backpack>().ChangeFilter(type);
+        window.ChangeFilter(type);
     }
 }

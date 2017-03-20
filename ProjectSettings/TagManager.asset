@@ -7,8 +7,7 @@ TagManager:
   - GrabBox
   - EatingRegion
   - Terrain
-  - GrabItem
-  - Fire
+  - Handle
   layers:
   - Default
   - TransparentFX

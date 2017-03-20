@@ -31,7 +31,7 @@ public class Menu : MonoBehaviour {
         if (!hand)
             return;
 
-        if (hand.GetComponent<PlayerHand>().triggerPressed)
+        if (hand.GetComponent<PlayerHand>().gripPressed)
         {
             currentDist = Vector3.Dot(hand.transform.position - pouch.position, -pouch.right);
             currentDist = Mathf.Clamp(currentDist, 0.05f, 0.47f);
@@ -51,6 +51,8 @@ public class Menu : MonoBehaviour {
                 scroll.SetActive(false);
                 this.transform.localPosition = originalPos;
                 isOpen = false;
+                Backpack.instance.SetEnable(false);
+                Craft.instance.SetEnable(false);
             }
             hand = null;
         }
@@ -60,7 +62,7 @@ public class Menu : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<PlayerHand>())
         {
-            if (!hand && other.gameObject.GetComponent<PlayerHand>().triggerPressed)
+            if (!hand && other.gameObject.GetComponent<PlayerHand>().gripPressed)
                 hand = other.gameObject;
         }
     }    

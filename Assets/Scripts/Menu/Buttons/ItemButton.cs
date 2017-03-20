@@ -17,27 +17,32 @@ public class ItemButton : MyButton {
     }
 
     public override void OnClick(PlayerHand hand)
-    {
-        // If item is not in storage, do nothing
-        if (!item.inBackpack)
-            return;
-        else if (!item.isSelected)
+    {    
+        if (item.inBackpack)
         {
-            Backpack.instance.SelectItem(item);
-        }
-        else
-        {
-            Item heldItem = hand.getHeldItem();
-
-            if (heldItem)
+            if (!item.isSelected)
             {
-                // Switches item if there is an item already in the player's hand
-                hand.dropItem();
-                Backpack.instance.AddItem(heldItem);
+                Backpack.instance.SelectItem(item);
             }
+            else
+            {
+                Item heldItem = hand.getHeldItem();
 
-            Backpack.instance.RemoveItem(item);
-            hand.grabItem(item);            
-        }        
+                if (heldItem)
+                {
+                    // Switches item if there is an item already in the player's hand
+                    hand.dropItem();
+                    Backpack.instance.AddItem(heldItem);
+                }
+
+                Backpack.instance.RemoveItem(item);
+                hand.grabItem(item);
+            }
+        }
+        else if (item.craftMenuItem)
+        {
+            if (!item.isSelected)
+                Craft.instance.SelectItem(item);
+        }
     }
 }

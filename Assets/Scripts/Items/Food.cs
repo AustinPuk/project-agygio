@@ -36,7 +36,7 @@ public class Food : Item
 
     private void OnTriggerStay(Collider other)
     {
-        if (!isActive)
+        if (!isActive || inBackpack)
             return;
 
         if (other.gameObject.tag == "EatingRegion")

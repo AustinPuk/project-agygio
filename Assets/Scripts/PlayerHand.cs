@@ -17,6 +17,11 @@ public class PlayerHand : MonoBehaviour {
     private Item heldItem;
     private bool holdingTrigger; // Prevents multiple inputs when holding down button
 
+    // Hacky window moving
+    private GameObject holdWindow;    
+    [SerializeField]
+    private Transform windowParent;
+
     LayerMask windowOnly;
     LayerMask buttonsOnly;
 
@@ -48,7 +53,6 @@ public class PlayerHand : MonoBehaviour {
             //this.transform.localPosition += this.transform.forward * sphereOffset;
         }
 
-
         // Menu Pointer for Interactions
         if (Menu.isOpen)
             WindowPointer();
@@ -65,7 +69,7 @@ public class PlayerHand : MonoBehaviour {
 
         // For Dropping an Object
 
-        if (!thumbTouch && !triggerTouched)
+        if (!gripPressed && !thumbTouch && !triggerTouched)
         {
             if (heldItem)
             {
@@ -87,6 +91,18 @@ public class PlayerHand : MonoBehaviour {
             {
                 grabItem(collision.transform.parent.GetComponent<Item>());                
             }
+            if (collision.gameObject.tag == "Handle" && !holdWindow)
+            {
+                // Ugly Handle Code 
+                holdWindow = collision.transform.parent.parent.gameObject;                 
+                holdWindow.transform.SetParent(this.transform);
+            }
+        }
+
+        if(!gripPressed && holdWindow)
+        {
+            holdWindow.transform.SetParent(windowParent);
+            holdWindow = null;
         }
     }
 
@@ -126,9 +142,9 @@ public class PlayerHand : MonoBehaviour {
     public void grabItem(Item item)
     {
         if (!item.isHeld)
-        {
-            heldItem = item;
-            item.OnGrab(this);
+        {            
+            if(item.OnGrab(this))
+                heldItem = item;
         }        
     }
 

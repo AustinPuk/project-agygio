@@ -34,10 +34,9 @@ public class PlayerTeleport : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //terrainOnly = 1 << LayerMask.NameToLayer("Terrain");
         Ray raycast = new Ray(origin.position, Vector3.down);
         RaycastHit floor;
-        bool ray = Physics.Raycast(raycast, out floor, 1000.0f, terrainOnly);
+        bool ray = Physics.Raycast(raycast, out floor, 1000.0f, terrainOnly);   
         if(ray)
             this.transform.position = floor.point + playerHeight * Vector3.up;
     }
