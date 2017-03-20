@@ -11,10 +11,10 @@ public abstract class MyButton : MonoBehaviour {
     {
         if (testClick)
         {
-            OnClick();
+            OnClick(VRControls.instance.rightHand);
             testClick = false;
         }
     }
 
-    public abstract void OnClick();
+    public abstract void OnClick(PlayerHand hand);
 }

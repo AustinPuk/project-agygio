@@ -7,6 +7,9 @@ public class Backpack : MonoBehaviour {
     public static Backpack instance;
 
     [SerializeField]
+    private GameObject UI;
+
+    [SerializeField]
     private GameObject gridArea;
 
     [SerializeField]
@@ -26,8 +29,8 @@ public class Backpack : MonoBehaviour {
     private Item selectedItem;
     public ItemType filterType;
 
-    private void Awake()
-    {
+    void Awake()
+    {                
         if (!instance)
             instance = this;
     }
@@ -121,11 +124,13 @@ public class Backpack : MonoBehaviour {
         Vector3 horizontalVector = Vector3.Normalize(rightEdge - leftEdge);
         Vector3 verticalVector = Vector3.Normalize(botEdge - topEdge);
         float width = Vector3.Distance(rightEdge, leftEdge);
-        float height = Vector3.Distance(topEdge, botEdge);        
+        //float height = Vector3.Distance(topEdge, botEdge);
 
         Vector3 start = gridBox.bounds.center + ((topEdge - botEdge) * 0.5f) + ((leftEdge - rightEdge) * 0.5f);
         Vector3 spot = start;
         int row = 0;
+
+        bool addedFirstItem = false;
 
         for (int i = 0; i < items.Count; i++)
         {
@@ -133,12 +138,12 @@ public class Backpack : MonoBehaviour {
                 continue;
 
             //Horizontal Spacing
-            if (i == 0)
+            if (!addedFirstItem)
                 spot = spot + (spacing / 2.0f) * horizontalVector;
             else
                 spot = spot + spacing * horizontalVector;
             //Vertical Spacing
-            if (i == 0)
+            if (!addedFirstItem)
                 spot = spot + (spacing / 2.0f) * verticalVector;
             else if (Vector3.Dot(spot - leftEdge, horizontalVector) >= width) //Checks if past bounds
             {
@@ -148,9 +153,14 @@ public class Backpack : MonoBehaviour {
                 spot = spot + (spacing / 2.0f) * verticalVector;
                 spot = spot + (spacing * verticalVector * row);
             }
+
+            Debug.Log("Backpack: Updating " + items[i].itemName + " on " + spot);
             
             items[i].transform.position = spot;
             items[i].transform.SetParent(gridArea.transform);
+
+            if (!addedFirstItem)
+                addedFirstItem = true;
         }
     }
 
@@ -159,5 +169,10 @@ public class Backpack : MonoBehaviour {
         foreach (Item item in items){
             item.transform.SetParent(hidden.transform);
         }
+    }
+
+    public void SetEnable(bool b)
+    {
+        UI.SetActive(b);
     }
 }

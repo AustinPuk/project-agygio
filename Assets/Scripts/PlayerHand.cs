@@ -14,7 +14,7 @@ public class PlayerHand : MonoBehaviour {
     public bool gripPressed;
     public bool thumbTouch;
 
-    private Item heldObject;
+    private Item heldItem;
     private bool holdingTrigger; // Prevents multiple inputs when holding down button
 
     LayerMask windowOnly;
@@ -28,11 +28,8 @@ public class PlayerHand : MonoBehaviour {
     
     
     private void Update ()
-    {
-        if (holdingTrigger && !triggerPressed)
-            holdingTrigger = false;
-
-        if (heldObject)
+    {        
+        if (heldItem)
             GetComponent<Renderer>().enabled = false;
         else
             GetComponent<Renderer>().enabled = true;
@@ -59,14 +56,20 @@ public class PlayerHand : MonoBehaviour {
             pointer.enabled = false;
 
 
+        // Checks if trigger is being held down (must be after windowPoitner)
+        if (triggerPressed && !holdingTrigger)
+            holdingTrigger = true;
+        if (holdingTrigger && !triggerPressed)
+            holdingTrigger = false;
+
+
         // For Dropping an Object
 
         if (!thumbTouch && !triggerTouched)
         {
-            if (heldObject)
+            if (heldItem)
             {
-                heldObject.OnDrop();
-                heldObject = null;
+                dropItem();
             }
         }
 	}
@@ -75,16 +78,14 @@ public class PlayerHand : MonoBehaviour {
     {
         // For Grabbing an Object
 
-        if (heldObject)
+        if (heldItem)
             return;
 
         if (gripPressed)
         {
             if (collision.gameObject.tag == "GrabBox")
             {
-                heldObject = collision.transform.parent.GetComponent<Item>();
-                if (!heldObject.isHeld) // Makes sure object not already in other hand
-                    heldObject.OnGrab(this);
+                grabItem(collision.transform.parent.GetComponent<Item>());                
             }
         }
     }
@@ -110,15 +111,10 @@ public class PlayerHand : MonoBehaviour {
                     if (hit.collider.gameObject.GetComponent<MyButton>())
                     {
                         Debug.Log("Pressing Button " + hit.collider.gameObject.name);
-                        hit.collider.gameObject.GetComponent<MyButton>().OnClick();
-                        holdingTrigger = true;
-
+                        hit.collider.gameObject.GetComponent<MyButton>().OnClick(this);                        
                     }
-
                 }
             }
-
-
         }
         else
         {
@@ -129,6 +125,21 @@ public class PlayerHand : MonoBehaviour {
 
     public void grabItem(Item item)
     {
+        if (!item.isHeld)
+        {
+            heldItem = item;
+            item.OnGrab(this);
+        }        
+    }
 
+    public void dropItem()
+    {
+        heldItem.OnDrop();
+        heldItem = null;
+    }
+
+    public Item getHeldItem()
+    {
+        return heldItem;
     }
 }

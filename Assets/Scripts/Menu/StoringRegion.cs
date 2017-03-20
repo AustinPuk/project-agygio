@@ -8,7 +8,7 @@ public class StoringRegion : MonoBehaviour {
     {        
         if (other.gameObject.GetComponent<Item>())
         {
-            Debug.Log("Item: Can Store");
+            //Debug.Log("Item: Can Store");
             other.gameObject.GetComponent<Item>().canStore = true;
         }
     }
@@ -17,7 +17,7 @@ public class StoringRegion : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<Item>())
         {
-            Debug.Log("Item: No more store");
+            //Debug.Log("Item: No more store");
             other.gameObject.GetComponent<Item>().canStore = false;
         }
     }

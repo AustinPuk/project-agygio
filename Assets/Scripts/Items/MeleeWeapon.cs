@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MeleeWeapon : Item {
 
+    [Header("Weapon Params")]
+
     [SerializeField]
     private float minimumVelocity = 0.0f;
 

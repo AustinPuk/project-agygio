@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Apple
-  itemType: 0
+  itemType: 1
   description: The apply. yes indeed, the apply. I can't spell APPLE GODASDHIOASJDIOASJDOi
   grabLocation: {fileID: 4808766941157172}
   highlight: {fileID: 23135393624435456}

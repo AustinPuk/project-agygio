@@ -16,7 +16,7 @@ public class ItemButton : MyButton {
         item = transform.parent.GetComponent<Item>();
     }
 
-    public override void OnClick()
+    public override void OnClick(PlayerHand hand)
     {
         // If item is not in storage, do nothing
         if (!item.inBackpack)
@@ -27,8 +27,17 @@ public class ItemButton : MyButton {
         }
         else
         {
+            Item heldItem = hand.getHeldItem();
+
+            if (heldItem)
+            {
+                // Switches item if there is an item already in the player's hand
+                hand.dropItem();
+                Backpack.instance.AddItem(heldItem);
+            }
+
             Backpack.instance.RemoveItem(item);
-            item.OnGrab(VRControls.instance.rightHand);
+            hand.grabItem(item);            
         }        
     }
 }

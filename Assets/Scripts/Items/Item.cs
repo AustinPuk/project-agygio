@@ -23,16 +23,16 @@ public abstract class Item : MonoBehaviour
     
     [SerializeField]
     protected bool deactivateOnDrop;
-
-    protected bool isActive;    
-    protected PlayerHand heldHand;
-
-    private bool holding; // If holding down the trigger
-
+    
+    [Header("Debug View")]
     public bool isHeld; // If currently being held by a hand
     public bool inBackpack;
     public bool canStore;    
     public bool isSelected; // If it is selected within the inventory
+
+    protected bool isActive;
+    protected PlayerHand heldHand;
+    private bool holding; // If holding down the trigger
 
     public abstract void OnPress();
     public abstract void OnHold();

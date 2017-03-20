@@ -9,6 +9,9 @@ public class PlayerTeleport : MonoBehaviour {
     //TODO: CLEAN UP THIS CODE AND REMOVE REDUNDANT INFO
 
     [SerializeField]
+    private PlayerHand hand;
+
+    [SerializeField]
     private Transform origin;
 
     [SerializeField]
@@ -21,17 +24,17 @@ public class PlayerTeleport : MonoBehaviour {
     [SerializeField]
     private LineRenderer curve;
 
+    [SerializeField]
+    LayerMask terrainOnly;
+
     private bool renderCurve = false;
     private Vector3 dest;
     private RaycastHit destinationHit = new RaycastHit();    
-    protected Vector3 fixedForwardBeamForward;
-
-    LayerMask terrainOnly;
-
+    protected Vector3 fixedForwardBeamForward;    
 
     // Use this for initialization
     void Start () {
-        terrainOnly = 1 << LayerMask.NameToLayer("Terrain");
+        //terrainOnly = 1 << LayerMask.NameToLayer("Terrain");
         Ray raycast = new Ray(origin.position, Vector3.down);
         RaycastHit floor;
         bool ray = Physics.Raycast(raycast, out floor, 1000.0f, terrainOnly);
@@ -41,15 +44,16 @@ public class PlayerTeleport : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (VRControls.instance.leftHand.gripPressed && !VRControls.instance.leftHand.triggerTouched)
+        // "Shooting Gun Pose" with hand to activate teleport
+        if (hand.gripPressed && !hand.thumbTouch && (!hand.triggerTouched || (hand.triggerTouched && !hand.triggerPressed && renderCurve)))
         {
             Vector3 jointPosition = ForwardBeam();
             Vector3 downPosition = DownBeam(jointPosition);
             DisplayCurvedBeam(jointPosition, downPosition);
             dest = downPosition;
-            renderCurve = true;      
-        }		
-        else if (VRControls.instance.leftHand.gripPressed && VRControls.instance.leftHand.triggerPressed && renderCurve == true)
+            renderCurve = true;            
+        }
+        else if (hand.gripPressed && !hand.thumbTouch && hand.triggerPressed && renderCurve == true)
         {            
             transform.position = new Vector3(dest.x, dest.y + playerHeight, dest.z);
             renderCurve = false;
@@ -73,7 +77,7 @@ public class PlayerTeleport : MonoBehaviour {
         Ray pointerRaycast = new Ray(origin.position, useForward);
 
         RaycastHit collidedWith;
-        var hasRayHit = Physics.Raycast(pointerRaycast, out collidedWith, calculatedLength);
+        var hasRayHit = Physics.Raycast(pointerRaycast, out collidedWith, calculatedLength, terrainOnly);
 
         float contactDistance = 0.0f;
 
@@ -104,7 +108,7 @@ public class PlayerTeleport : MonoBehaviour {
         Ray projectedBeamDownRaycast = new Ray(jointPosition, Vector3.down);
         RaycastHit collidedWith;
 
-        var downRayHit = Physics.Raycast(projectedBeamDownRaycast, out collidedWith, float.PositiveInfinity);
+        var downRayHit = Physics.Raycast(projectedBeamDownRaycast, out collidedWith, float.PositiveInfinity, terrainOnly);
 
         if (!downRayHit || (destinationHit.collider && destinationHit.collider != collidedWith.collider))
         {

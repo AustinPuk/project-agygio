@@ -275,7 +275,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!54 &54401333802069356
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Sword
-  itemType: 0
+  itemType: 3
   description: supercalifragilisticexpealidocious
   grabLocation: {fileID: 4474228343492410}
   highlight: {fileID: 23653060361509870}

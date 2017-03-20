@@ -11,7 +11,7 @@ public class FilterButton : MyButton {
     [SerializeField]
     private ItemType type;
 
-    public override void OnClick()
+    public override void OnClick(PlayerHand hand)
     {
         window.GetComponent<Backpack>().ChangeFilter(type);
     }
