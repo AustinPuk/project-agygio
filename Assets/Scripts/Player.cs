@@ -6,10 +6,10 @@ public class Player : MonoBehaviour {
     public static Player instance;
 
     [SerializeField]
-    private float maxHealth;
+    public float maxHealth;
 
     [SerializeField]
-    private float maxHunger;
+    public float maxHunger;
 
     [Tooltip("Rate that hunger reduces per MINUTE")]
     [SerializeField]
@@ -38,6 +38,7 @@ public class Player : MonoBehaviour {
 	void Update () {
 
         Regen(Time.deltaTime);
+        CheckDeath();
 		        
 	}
 
@@ -47,7 +48,8 @@ public class Player : MonoBehaviour {
     {
         hunger = Mathf.Clamp(hunger  - (hungerRate / 60.0f) * deltaTime, 0, maxHunger);
         //health += hunger * some logarithmic modifier * baseHealthRegen;
-        health = Mathf.Clamp(health + baseHealthRegen / 60.0f, 0.0f, maxHealth);
+        float regen = (baseHealthRegen / 60.0f) * (((2 * hunger) / maxHunger) - 1.0f);
+        health = Mathf.Clamp(health + (regen * Time.deltaTime), 0.0f, maxHealth);
     }
 
     void CheckDeath()
