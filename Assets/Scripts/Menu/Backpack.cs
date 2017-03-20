@@ -34,6 +34,8 @@ public class Backpack : MonoBehaviour {
 	
 	void Start ()
     {
+        foreach (Item item in items)
+            AddItem(item);
         UpdateInventory(filterType);
 		
 	}
@@ -59,6 +61,7 @@ public class Backpack : MonoBehaviour {
         // Adjust Scale
         float newScale = spacing / Vector3.Magnitude(item.GetComponent<BoxCollider>().size);
         item.transform.localScale = new Vector3(newScale, newScale, newScale);
+        item.transform.localRotation = item.storeRotate.localRotation;
     }
 
     public void RemoveItem(Item item)

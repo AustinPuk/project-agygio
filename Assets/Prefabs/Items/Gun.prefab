@@ -47,6 +47,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1667450645386410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4903264526171122}
+  m_Layer: 0
+  m_Name: StoreRotate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1801033862222966
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,6 +128,7 @@ Transform:
   - {fileID: 4461972174767410}
   - {fileID: 4369887890992170}
   - {fileID: 4695648697733758}
+  - {fileID: 4903264526171122}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -168,6 +184,19 @@ Transform:
   m_Father: {fileID: 4221176662603266}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4903264526171122
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667450645386410}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4221176662603266}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
 --- !u!23 &23190281196223774
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -355,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a97d0c61adbd3a4eb5064363cf41f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testClick: 0
 --- !u!114 &114295758959445156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -367,9 +397,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Gun
+  itemType: 0
   description: KAMEHAMA
   grabLocation: {fileID: 4461972174767410}
   highlight: {fileID: 23190281196223774}
+  storeRotate: {fileID: 4903264526171122}
   initialActiveState: 0
   deactivateOnDrop: 0
   isHeld: 0

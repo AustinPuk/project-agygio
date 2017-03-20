@@ -10,10 +10,13 @@ public abstract class Item : MonoBehaviour
     public string description = "Test";    
 
     [SerializeField]
-    protected Transform grabLocation;
+    protected Transform grabLocation;    
 
     [SerializeField]
     protected MeshRenderer highlight;
+
+    [SerializeField]
+    public Transform storeRotate;
 
     [SerializeField]
     protected bool initialActiveState;
