@@ -23,6 +23,9 @@ public abstract class Window : MonoBehaviour
     [SerializeField]
     private float spacing;
 
+    [SerializeField]
+    private float offset;
+
     public List<Item> items;
 
     public Item selectedItem;
@@ -79,6 +82,8 @@ public abstract class Window : MonoBehaviour
 
     protected void UpdateInventory(ItemType filterType)
     {
+        Debug.Log("Updating " + this.name);
+
         ClearGrid();
 
         // Get bounds of grid region, despite rotations
@@ -93,6 +98,7 @@ public abstract class Window : MonoBehaviour
         Vector3 botEdge = gridBox.transform.TransformPoint(0.0f, localMin.y, 0.0f);
         Vector3 horizontalVector = Vector3.Normalize(rightEdge - leftEdge);
         Vector3 verticalVector = Vector3.Normalize(botEdge - topEdge);
+        Vector3 normalVector = Vector3.Normalize(Vector3.Cross(horizontalVector, verticalVector));
         float width = Vector3.Distance(rightEdge, leftEdge);
         //float height = Vector3.Distance(topEdge, botEdge);
 
@@ -124,7 +130,7 @@ public abstract class Window : MonoBehaviour
                 spot = spot + (spacing * verticalVector * row);
             }
 
-            items[i].transform.position = spot;
+            items[i].transform.position = spot + (normalVector * offset);
             items[i].transform.SetParent(gridArea.transform);
 
             if (!addedFirstItem)

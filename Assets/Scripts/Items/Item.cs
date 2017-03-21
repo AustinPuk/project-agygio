@@ -93,7 +93,7 @@ public abstract class Item : MonoBehaviour
     {
         if (inBackpack || craftMenuItem)
         {
-            Debug.Log("Can't grab item");
+            //Debug.Log("Can't grab item");
             return false;
         }        
 
@@ -125,9 +125,11 @@ public abstract class Item : MonoBehaviour
 
         if (canStore)
             Backpack.instance.AddItem(this);
-        
-        GetComponent<BoxCollider>().isTrigger = false;  // Allows item to fall to the floor
-        GetComponent<Rigidbody>().isKinematic = false;
+        else
+        {
+            GetComponent<BoxCollider>().isTrigger = false;  // Allows item to fall to the floor
+            GetComponent<Rigidbody>().isKinematic = false;
+        }                
 
         if (!inBackpack)
             GetComponent<Rigidbody>().velocity = heldHand.velocity;

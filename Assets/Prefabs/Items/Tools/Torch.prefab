@@ -183,9 +183,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1063232967165966}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 0.0625, z: 0.1221}
+  m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1.0000001}
   m_Children: []
   m_Father: {fileID: 4503725792541092}
   m_RootOrder: 2
@@ -497,7 +497,7 @@ MonoBehaviour:
   grabLocation: {fileID: 4351784807334804}
   storeRotate: {x: 0, y: 0, z: 0}
   initialActiveState: 0
-  deactivateOnDrop: 0
+  deactivateOnDrop: 1
   isDiscovered: 0
   craftMenuItem: 0
   requiredItemOne: {fileID: 114278203601868306, guid: 80dd306bb1a8f7d4499f2f26a867e649,

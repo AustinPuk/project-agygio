@@ -101,14 +101,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1313463301408540}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.68, z: 0}
+  m_LocalRotation: {x: -0, y: 0.9502016, z: -0, w: 0.31163606}
+  m_LocalPosition: {x: 0, y: 1.68, z: -83.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4615867210949772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 143.684, z: 0}
 --- !u!4 &4366019999690520
 Transform:
   m_ObjectHideFlags: 1
@@ -276,7 +276,7 @@ Animator:
   m_GameObject: {fileID: 1483328595353216}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2e7fba5f2bb189843bb06c0334d2a352, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9fc679453ddf6a642a53727657a29673, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -297,6 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Ploro
   level: 1
+  activeDist: 30
   attackSpeed: 1
   combatRange: 1.5
   sightRange: 5

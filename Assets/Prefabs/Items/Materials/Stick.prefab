@@ -88,9 +88,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1068821502310328}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 0.0625, z: 0.1221}
+  m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1.0000001}
   m_Children: []
   m_Father: {fileID: 4731779833219966}
   m_RootOrder: 2
@@ -102,8 +102,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1502602114139038}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.0540944, y: -0.05623751, z: -0.80003154}
+  m_LocalPosition: {x: 0, y: 0, z: -0.006}
+  m_LocalScale: {x: -0.07961305, y: -0.08953407, z: -0.7005575}
   m_Children: []
   m_Father: {fileID: 4731779833219966}
   m_RootOrder: 0
@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 1591653682552760}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.0067, z: 0.0057}
-  m_LocalScale: {x: 0.03, y: 0.33, z: 0.02}
+  m_LocalScale: {x: 0.06, y: 0.58, z: 0.05}
   m_Children: []
   m_Father: {fileID: 4731779833219966}
   m_RootOrder: 1
@@ -128,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1657735237647884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -136.2221, y: 34.31442, z: -21.534866}
+  m_LocalPosition: {x: -136.2221, y: 34.31442, z: -21.312}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4340888374107370}
@@ -265,7 +265,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.03, y: 0.33, z: 0.02}
+  m_Size: {x: 0.06, y: 0.58, z: 0.05}
   m_Center: {x: 0, y: 0.0067, z: 0.0057}
 --- !u!95 &95520632226401236
 Animator:
@@ -295,8 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5f00f4499592644a27a9f6c7f6be26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Wand
-  description: It's a stick, but better.
+  itemName: Stick
+  description: 
   itemType: 2
   highlight: {fileID: 23419774999871678}
   grabLocation: {fileID: 4011014786042722}

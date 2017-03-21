@@ -16,7 +16,7 @@ public class Backpack : Window {
     {        
         base.AddItem(item);
 
-        Debug.Log("Backpack: Add " + item.name);
+        // Debug.Log("Backpack: Add " + item.name);
         
         item.inBackpack = true;
 
@@ -25,7 +25,7 @@ public class Backpack : Window {
 
     public void RemoveItem(Item item)
     {
-        Debug.Log("Backpack: Remove " + item.name);
+        //Debug.Log("Backpack: Remove " + item.name);
 
         items.Remove(item);
 

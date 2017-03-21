@@ -62,7 +62,7 @@ MonoBehaviour:
   - {fileID: 1893796764076796, guid: 510121535bef4e543b078a543f9d8dfb, type: 2}
   - {fileID: 1657735237647884, guid: 80dd306bb1a8f7d4499f2f26a867e649, type: 2}
   - {fileID: 1021950382395066, guid: a385c596ac3ea29448b73af910639f22, type: 2}
-  itemRange: {x: 20, y: 100}
+  itemRange: {x: 200, y: 300}
   enemies:
   - {fileID: 1843993838453764, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
   - {fileID: 1313463301408540, guid: 8b510786eaee7524589acf4875101705, type: 2}

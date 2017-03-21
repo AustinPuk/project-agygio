@@ -76,7 +76,7 @@ public class WorldGenerator : MonoBehaviour
             }                
         }
 
-        Debug.Log("World Height: " + x + " " + z + " " + closestTerrain);
+        //Debug.Log("World Height: " + x + " " + z + " " + closestTerrain);
         return closestTerrain.HeightLookup(x - closestTerrain.transform.position.x, z - closestTerrain.transform.position.z);
     }
 
