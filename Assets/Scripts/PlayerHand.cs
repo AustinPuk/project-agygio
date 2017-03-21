@@ -32,9 +32,9 @@ public class PlayerHand : MonoBehaviour {
     {
         windowOnly = 1 << LayerMask.NameToLayer("Window");
         buttonsOnly = 1 << LayerMask.NameToLayer("Buttons");
-        lastPos = transform.position;
-    }
-    
+        lastPos = transform.position;        
+    }    
+        
     
     private void Update ()
     {
@@ -81,7 +81,7 @@ public class PlayerHand : MonoBehaviour {
         if (!gripPressed && !thumbTouch && !triggerTouched)
         {
             if (heldItem)
-            {
+            {                
                 dropItem();
             }
         }
@@ -91,17 +91,22 @@ public class PlayerHand : MonoBehaviour {
     {
         // For Grabbing an Object
 
+        // TODO: Be able to detect "pressing" action, rather than checking if it's held down.
+
         if (heldItem)
             return;
+
+        if (collision.gameObject.tag == "GrabBox" || collision.gameObject.tag == "Handle")
+            SetHaptic(0.2f, 0.2f);
 
         if (gripPressed)
         {
             if (collision.gameObject.tag == "GrabBox")
-            {
+            {                
                 grabItem(collision.transform.parent.GetComponent<Item>());                
             }
             if (collision.gameObject.tag == "Handle" && !holdWindow)
-            {
+            {                
                 // Ugly Handle Code 
                 holdWindow = collision.transform.parent.parent.gameObject;                 
                 holdWindow.transform.SetParent(this.transform);
@@ -110,9 +115,16 @@ public class PlayerHand : MonoBehaviour {
 
         if(!gripPressed && holdWindow)
         {
+            SetHaptic(0.0f, 0.0f);
             holdWindow.transform.SetParent(windowParent);
             holdWindow = null;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "GrabBox" || other.gameObject.tag == "Handle")
+            SetHaptic(0.0f, 0.0f);
     }
 
     private void WindowPointer()
@@ -135,7 +147,8 @@ public class PlayerHand : MonoBehaviour {
                 {
                     if (hit.collider.gameObject.GetComponent<MyButton>())
                     {
-                        Debug.Log("Pressing Button " + hit.collider.gameObject.name);
+                        //Debug.Log("Pressing Button " + hit.collider.gameObject.name);
+                        SetHaptic(0.4f, 0.4f, 0.1f);
                         hit.collider.gameObject.GetComponent<MyButton>().OnClick(this);                        
                     }
                 }
@@ -151,7 +164,8 @@ public class PlayerHand : MonoBehaviour {
     public void grabItem(Item item)
     {
         if (!item.isHeld)
-        {            
+        {
+            SetHaptic(0.5f, 0.5f, 0.1f);
             if(item.OnGrab(this))
                 heldItem = item;
         }        
@@ -159,6 +173,7 @@ public class PlayerHand : MonoBehaviour {
 
     public void dropItem()
     {
+        SetHaptic(0.2f, 0.4f, 0.1f);
         heldItem.OnDrop();
         heldItem = null;
     }
@@ -166,5 +181,26 @@ public class PlayerHand : MonoBehaviour {
     public Item getHeldItem()
     {
         return heldItem;
+    }
+        
+    public void SetHaptic(float frequency, float amplitude)
+    {        
+        if (isRightHand)
+            OVRInput.SetControllerVibration(frequency, amplitude, OVRInput.Controller.RTouch);
+        else
+            OVRInput.SetControllerVibration(frequency, amplitude, OVRInput.Controller.LTouch);
+    }
+
+    public void SetHaptic(float frequency, float amplitude, float time)
+    {
+        StartCoroutine(TimedHaptic(frequency, amplitude, time));
+    }
+
+    private IEnumerator TimedHaptic(float frequency, float amplitude, float time)
+    {
+        SetHaptic(frequency, amplitude);
+        yield return new WaitForSeconds(time);
+        SetHaptic(0.0f, 0.0f);
+        yield return null;
     }
 }

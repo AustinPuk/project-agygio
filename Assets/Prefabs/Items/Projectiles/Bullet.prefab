@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33304770530645822}
   - component: {fileID: 136238545751142628}
   - component: {fileID: 23101287005567498}
-  - component: {fileID: 114959928109115876}
   - component: {fileID: 54122909304415922}
+  - component: {fileID: 114959928109115876}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -117,7 +117,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1488890285220396}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 5

@@ -16,17 +16,22 @@ public class MeleeWeapon : Item {
     [SerializeField]
     private Effects baseEffect;
 
-    private Vector3 currentVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 currentVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     private Vector3 prevPosition = new Vector3(0.0f, 0.0f, 0.0f);
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Enemy>())
-        {
+        {            
             //Debug.Log("Weapon Found Enemy: " + Vector3.Magnitude(GetComponent<Rigidbody>().velocity));
             if (Vector3.Magnitude(currentVelocity) > minimumVelocity)
             {
                 other.gameObject.GetComponent<Enemy>().TakeDamage(baseDamage, baseEffect);
+                heldHand.SetHaptic(0.6f, 0.8f, 0.06f);
+            }
+            else
+            {
+                heldHand.SetHaptic(0.2f, 0.3f, 0.04f);
             }
         }
     }

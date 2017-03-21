@@ -39,7 +39,7 @@ public abstract class Item : MonoBehaviour
     public bool isSelected; // If it is selected within the inventory
 
     protected bool isActive;
-    protected PlayerHand heldHand;
+    public PlayerHand heldHand;
     private bool holding; // If holding down the trigger
 
     public abstract void OnPress();

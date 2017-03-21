@@ -456,7 +456,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.83823526, g: 0.7804259, b: 0.5916955, a: 1}
   m_Intensity: 6.84
-  m_Range: 2
+  m_Range: 5
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -502,10 +502,10 @@ MonoBehaviour:
   craftMenuItem: 0
   requiredItemOne: {fileID: 114278203601868306, guid: 80dd306bb1a8f7d4499f2f26a867e649,
     type: 2}
-  numberItemOne: 3
+  numberItemOne: 2
   requiredItemTwo: {fileID: 114141389282370780, guid: 4c68dbbac51bfd64a99c93248eb4bbfd,
     type: 2}
-  numberItemTwo: 3
+  numberItemTwo: 2
   isHeld: 0
   inBackpack: 0
   canStore: 0

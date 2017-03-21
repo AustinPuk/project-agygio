@@ -134,7 +134,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254170763370394}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.7495039, y: 1.0432413, z: 1.7523832}
@@ -171,5 +171,5 @@ MonoBehaviour:
     type: 2}
   requiredTool: {fileID: 114582841455175456, guid: 4ab2577cd3aa5e0448497b7aade43a1d,
     type: 2}
-  health: 5
+  health: 20
   minVelocity: 0

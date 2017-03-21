@@ -343,17 +343,17 @@ MonoBehaviour:
   itemType: 3
   highlight: {fileID: 23190281196223774}
   grabLocation: {fileID: 4461972174767410}
-  storeRotate: {x: 0, y: 0, z: 0}
+  storeRotate: {x: 0, y: 90, z: 0}
   initialActiveState: 0
   deactivateOnDrop: 0
   isDiscovered: 0
   craftMenuItem: 0
   requiredItemOne: {fileID: 114176044403766524, guid: 510121535bef4e543b078a543f9d8dfb,
     type: 2}
-  numberItemOne: 5
+  numberItemOne: 1
   requiredItemTwo: {fileID: 114396111283057518, guid: 9c5072029251a2e4f8934f24b0ad3e11,
     type: 2}
-  numberItemTwo: 5
+  numberItemTwo: 2
   isHeld: 0
   inBackpack: 0
   canStore: 0

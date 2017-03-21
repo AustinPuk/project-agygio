@@ -167,7 +167,7 @@ public class Enemy : MonoBehaviour
             {
                 Debug.Log("Enemy: Attacking");
                 float dmg = Random.Range(baseDamage + (-10 + (DEX * 1.5f)), baseDamage + (DEX * 1.5f)); // Dex increases accuracy of stronger attacks
-                target.GetComponent<Player>().TakeDamage(dmg, damageType);
+                target.GetComponent<Player>().TakeDamage(dmg, Vector3.Normalize(Player.instance.transform.position - transform.position), damageType);
                 Stop();
             }
             else

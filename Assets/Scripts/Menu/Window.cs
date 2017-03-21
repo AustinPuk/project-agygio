@@ -26,6 +26,7 @@ public abstract class Window : MonoBehaviour
     [SerializeField]
     private float offset;
 
+    public List<Item> uniqueItems;
     public List<Item> items;
 
     public Item selectedItem;
@@ -74,6 +75,15 @@ public abstract class Window : MonoBehaviour
         description.text = item.description;
     }
 
+    public virtual void Deselect()
+    {
+        if (selectedItem)
+            selectedItem.isSelected = false;
+        selectedItem = null;
+        title.text = "";
+        description.text = "";
+    }
+
     public void ChangeFilter(ItemType type)
     {
         filterType = type;
@@ -82,7 +92,7 @@ public abstract class Window : MonoBehaviour
 
     protected void UpdateInventory(ItemType filterType)
     {
-        Debug.Log("Updating " + this.name);
+        //Debug.Log("Updating " + this.name);
 
         ClearGrid();
 
@@ -108,10 +118,23 @@ public abstract class Window : MonoBehaviour
 
         bool addedFirstItem = false;
 
+        List<Item> placedItems = new List<Item>();
+
         for (int i = 0; i < items.Count; i++)
         {
             if (filterType != ItemType.NONE && items[i].itemType != filterType)
                 continue;
+
+            bool checkDuplicate = false;
+            foreach (Item item in placedItems)
+            {
+                // Don't place items if same item already on grid
+                if (item.itemName == items[i].itemName)
+                    checkDuplicate = true;
+            }
+            if (checkDuplicate)
+                continue;
+            
 
             //Horizontal Spacing
             if (!addedFirstItem)
@@ -132,6 +155,8 @@ public abstract class Window : MonoBehaviour
 
             items[i].transform.position = spot + (normalVector * offset);
             items[i].transform.SetParent(gridArea.transform);
+
+            placedItems.Add(items[i]);
 
             if (!addedFirstItem)
                 addedFirstItem = true;

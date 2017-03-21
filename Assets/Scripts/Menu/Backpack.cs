@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class Backpack : Window {
     public static Backpack instance;
 
+    [SerializeField]
+    private Text number;
+
     void Awake()
     {                
         if (!instance)
@@ -51,6 +54,18 @@ public class Backpack : Window {
                 return;
             }                
         }
+    }
+
+    public override void SelectItem(Item item)
+    {
+        base.SelectItem(item);
+        number.text = countItem(item).ToString();
+    }
+
+    public override void Deselect()
+    {
+        base.Deselect();
+        number.text = "";
     }
 
     public int countItem(Item item)

@@ -317,7 +317,8 @@ MonoBehaviour:
   deactivateOnDrop: 0
   isDiscovered: 0
   craftMenuItem: 0
-  requiredItemOne: {fileID: 114497482003321354}
+  requiredItemOne: {fileID: 114278203601868306, guid: 80dd306bb1a8f7d4499f2f26a867e649,
+    type: 2}
   numberItemOne: 100
   requiredItemTwo: {fileID: 0}
   numberItemTwo: 0

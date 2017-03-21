@@ -11,6 +11,9 @@ public class Player : MonoBehaviour {
     [SerializeField]
     public float maxHunger;
 
+    [SerializeField]
+    private GameObject damageIndicator;
+
     [Tooltip("Rate that hunger reduces per MINUTE")]
     [SerializeField]
     private float hungerRate;
@@ -66,6 +69,20 @@ public class Player : MonoBehaviour {
         // Some sort of method for transitioning to a main menu / title screen / DARKNESS
     }
 
+    IEnumerator KnockBack(Vector3 direction)
+    {
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().AddForce(direction * 300.0f);
+        damageIndicator.SetActive(true);
+        yield return new WaitForSeconds(0.09f);
+        GetComponent<Rigidbody>().isKinematic = true;
+        yield return new WaitForSeconds(0.1f);
+        damageIndicator.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        damageIndicator.SetActive(false);
+        yield return null;
+    }
+
 
     /***************************** Public Functions *******************************/
 
@@ -75,10 +92,16 @@ public class Player : MonoBehaviour {
         hunger = Mathf.Clamp(hunger + amount, 0.0f, maxHunger);
     }    
 
-    public void TakeDamage(float amount, Effects type)
+    public void TakeDamage(float amount, Vector3 dir, Effects type)
     {
         Debug.Log("Player: Take Damage");
         health -= amount;
+
+        VRControls.instance.rightHand.SetHaptic(1.0f, 1.0f, 0.2f);
+        VRControls.instance.leftHand.SetHaptic(1.0f, 1.0f, 0.2f);
+
+        dir.y = 0.0f;
+        StartCoroutine(KnockBack(dir));
 
         // TODO: take type into account, and possibly even armor. 
     }

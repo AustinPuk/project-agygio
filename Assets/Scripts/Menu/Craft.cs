@@ -63,6 +63,15 @@ public class Craft : Window
         }            
     }
 
+    public override void Deselect()
+    {
+        base.Deselect();
+        itemOneName.text = "";
+        itemOneNumb.text = "";
+        itemTwoName.text = "";
+        itemTwoNumb.text = "";
+    }
+
     public void UpdateInfo()
     {
         if (!selectedItem)

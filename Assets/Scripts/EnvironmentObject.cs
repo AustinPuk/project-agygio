@@ -16,19 +16,30 @@ public class EnvironmentObject : MonoBehaviour {
 
     [SerializeField]
     private float minVelocity;
-    
-    private void OnCollisionEnter(Collision collision)
+
+    private void Start()
     {
-        if (collision.gameObject.GetComponent<Item>())
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<MeleeWeapon>())
         {
-            if (collision.gameObject.GetComponent<Item>().itemName == requiredTool.itemName)
+            if (other.gameObject.GetComponent<MeleeWeapon>().itemName == requiredTool.itemName)
             {
-                Debug.Log("EnvObject Hit: Velocity " + Vector3.Magnitude(collision.relativeVelocity) + " " + this.name);
-                if (Vector3.Magnitude(collision.relativeVelocity) > minVelocity)
+                float vel = Vector3.Magnitude(other.gameObject.GetComponent<MeleeWeapon>().currentVelocity);
+                // Debug.Log("EnvObject Hit: Velocity " + vel + " " + this.name);
+                if (vel > minVelocity)
                 {
-                    health -= 1 * Vector3.Magnitude(collision.relativeVelocity);
+                    health -= 1 * vel;
                     CheckHealth();
-                }                    
+                    other.gameObject.GetComponent<Item>().heldHand.SetHaptic(0.6f, 0.8f, 0.06f); // TODO : Change Protection Level Back
+                }
+                else
+                {
+                    other.gameObject.GetComponent<Item>().heldHand.SetHaptic(0.3f, 0.3f, 0.04f);
+                }
             }
         }
     }
@@ -38,10 +49,10 @@ public class EnvironmentObject : MonoBehaviour {
         if (health < 0.0f)
         {
             GameObject item = Instantiate(producedItem);
-            item.transform.position = this.transform.position;
+            item.transform.position = this.transform.position + (Vector3.up * 1.0f);
+            item.GetComponent<Rigidbody>().AddForce(Vector3.up * 20.0f);
 
             // Play some sort of effect to indicate destroyed or hit
-
             Destroy(this.gameObject);
         }
     }

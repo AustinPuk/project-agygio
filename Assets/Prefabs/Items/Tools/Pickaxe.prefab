@@ -320,10 +320,10 @@ MonoBehaviour:
   craftMenuItem: 0
   requiredItemOne: {fileID: 114278203601868306, guid: 80dd306bb1a8f7d4499f2f26a867e649,
     type: 2}
-  numberItemOne: 3
+  numberItemOne: 1
   requiredItemTwo: {fileID: 114176044403766524, guid: 510121535bef4e543b078a543f9d8dfb,
     type: 2}
-  numberItemTwo: 4
+  numberItemTwo: 2
   isHeld: 0
   inBackpack: 0
   canStore: 0

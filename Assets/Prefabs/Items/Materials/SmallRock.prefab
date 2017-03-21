@@ -300,7 +300,7 @@ MonoBehaviour:
   itemType: 2
   highlight: {fileID: 23825000980614482}
   grabLocation: {fileID: 4817250726688538}
-  storeRotate: {x: 0, y: 0, z: 0}
+  storeRotate: {x: 0, y: 0, z: 90}
   initialActiveState: 0
   deactivateOnDrop: 0
   isDiscovered: 0

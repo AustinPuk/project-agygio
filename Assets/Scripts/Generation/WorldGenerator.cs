@@ -10,6 +10,18 @@ public class WorldGenerator : MonoBehaviour
     // Also delegates terrain generation so that fixed points match
 
     [SerializeField]
+    private Transform sun;
+
+    [SerializeField]
+    private Transform moon;
+
+    [SerializeField]
+    private float rotationRate;
+
+    [SerializeField]
+    private float nightLength;
+
+    [SerializeField]
     int seed;
 
     [SerializeField]
@@ -17,6 +29,9 @@ public class WorldGenerator : MonoBehaviour
 
     [SerializeField]
     List<TerrainGenerator> terrains;
+
+    public bool isDay;
+    private float nightTimer;
 
     private void Awake()
     {
@@ -27,6 +42,10 @@ public class WorldGenerator : MonoBehaviour
             Random.InitState(seed);
 
         GenerateWorld();
+
+        isDay = true;
+        sun.gameObject.SetActive(true);
+        moon.gameObject.SetActive(false);
     }
 
     // Use this for initialization
@@ -35,12 +54,38 @@ public class WorldGenerator : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if (isDay)
+        {
+            sun.RotateAround(new Vector3(0.0f, 0.0f, 0.0f), Vector3.forward, rotationRate * Time.deltaTime);
 
+            // Going from -10 degrees -> 190 degrees
+            Vector3 rotation = sun.rotation.eulerAngles;                        
+            if (rotation.x > 190.0f)
+            {
+                isDay = false;
+                sun.gameObject.SetActive(false);
+                moon.gameObject.SetActive(true);
+                nightTimer = nightLength;
+                sun.rotation = Quaternion.Euler(-90.0f, 0, 0);
+            }                        
+        }
+        else
+        {
+            if (nightTimer > 0.0f)
+                nightTimer -= Time.deltaTime;
+            else
+            {
+                isDay = true;
+                sun.gameObject.SetActive(true);
+                moon.gameObject.SetActive(false);                
+                sun.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+                sun.RotateAround(new Vector3(0.0f, 0.0f, 0.0f), Vector3.forward, -89.0f);
+            }                        
+        }
     }
-   
+       
     /***************** Core Functions ************************/
 
     private void GenerateWorld()
