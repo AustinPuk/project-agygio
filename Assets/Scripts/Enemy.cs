@@ -64,10 +64,6 @@ public class Enemy : MonoBehaviour
     private float patrolTimer;
     private float attackTimer;
 
-    public bool test;
-    public float test1;
-    private float testTimer;
-
     void Start ()
     {
         ChangeLevel(level);
@@ -118,10 +114,12 @@ public class Enemy : MonoBehaviour
 
     void Search()
     {
+        // Enemies have larger sight at night (Temporary. TODO: Make better system)
+        float range = (WorldGenerator.instance.isDay) ? sightRange * 2 : sightRange;
         // Player already targetted, check if still in range
         if (target)
         {
-            if (Vector3.Distance(target.position, transform.position) >= sightRange)
+            if (Vector3.Distance(target.position, transform.position) >= range)
             {
                 target = null;
                 patrolTimer = patrolInterval;
@@ -135,11 +133,11 @@ public class Enemy : MonoBehaviour
         {
             // Adjust sight based on which angle player is from enemy's front
             float angle = Mathf.Abs(Vector3.Angle(Player.instance.transform.position - transform.position, transform.forward));
-            float adjustedSight = sightRange;
+            float adjustedSight = range;
             if (angle > 45.0f && angle <= 90.0f || angle > 270.0f && angle < 315.0f)
-                adjustedSight = 0.5f * sightRange;
+                adjustedSight = 0.5f * range;
             else if (angle > 90.0f && angle <= 270.0f)
-                adjustedSight = 0.05f * sightRange;
+                adjustedSight = 0.1f * range;
 
             if (Vector3.Distance(Player.instance.transform.position, transform.position) < adjustedSight)
             {
@@ -165,7 +163,7 @@ public class Enemy : MonoBehaviour
         {
             if (!projectile) // Melee
             {
-                Debug.Log("Enemy: Attacking");
+                //Debug.Log("Enemy: Attacking");
                 float dmg = Random.Range(baseDamage + (-10 + (DEX * 1.5f)), baseDamage + (DEX * 1.5f)); // Dex increases accuracy of stronger attacks
                 target.GetComponent<Player>().TakeDamage(dmg, Vector3.Normalize(Player.instance.transform.position - transform.position), damageType);
                 Stop();
@@ -187,7 +185,7 @@ public class Enemy : MonoBehaviour
             patrolTimer -= Time.deltaTime;
         else
         {
-            Debug.Log("Enemy: Patrol New Loc");
+            //Debug.Log("Enemy: Patrol New Loc");
             // Patrols random nearby locations
             Vector3 randVec = new Vector3(Random.Range(0.1f, patrolRange), 0.0f, Random.Range(0.1f, patrolRange));
             Move(patrolCenter.position + randVec);
@@ -212,7 +210,7 @@ public class Enemy : MonoBehaviour
 
     void Stop()
     {
-        Debug.Log("Enemy: Stopping");
+        //Debug.Log("Enemy: Stopping");
         agent.Stop();
     }
     
@@ -238,8 +236,10 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float amount, Effects type)
     {
-        Debug.Log("Enemy Taking Damage "+ amount);
+        //Debug.Log("Enemy Taking Damage "+ amount);
         health -= amount;
         StartCoroutine(KnockBack(Vector3.Normalize(Player.instance.transform.position - transform.position)));
+
+        // Targets Player
     }
 }

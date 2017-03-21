@@ -24,8 +24,8 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField]
     int seed;
 
-    [SerializeField]
-    bool saveFile = false;
+    //[SerializeField]
+    //bool saveFile = false;
 
     [SerializeField]
     List<TerrainGenerator> terrains;

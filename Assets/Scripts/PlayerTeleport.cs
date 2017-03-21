@@ -35,8 +35,7 @@ public class PlayerTeleport : MonoBehaviour {
 
     private bool renderCurve = false;
     private bool destValid;
-    private Vector3 dest;
-    private RaycastHit destinationHit = new RaycastHit();    
+    private Vector3 dest;    
     protected Vector3 fixedForwardBeamForward;    
 
     // Use this for initialization
@@ -142,8 +141,7 @@ public class PlayerTeleport : MonoBehaviour {
         var downRayHit = Physics.Raycast(projectedBeamDownRaycast, out collidedWith, float.PositiveInfinity, teleportLayers);
 
 
-        dest = projectedBeamDownRaycast.GetPoint(collidedWith.distance);
-        destinationHit = collidedWith;
+        dest = projectedBeamDownRaycast.GetPoint(collidedWith.distance);        
 
         if (downRayHit && collidedWith.collider.tag == "Terrain")       
             return true;

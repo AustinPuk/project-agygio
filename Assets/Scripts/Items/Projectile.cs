@@ -16,6 +16,8 @@ public class Projectile : MonoBehaviour {
     private Effects damageType;
     private float damage;
 
+    private bool thrown;
+
     private bool isPlayers;
 
     private void OnTriggerEnter(Collider other)
@@ -23,14 +25,14 @@ public class Projectile : MonoBehaviour {
         if (!fired)
             return;
 
-        Debug.Log("Fire hitting " + other.name);
+        // Debug.Log("Fire hitting " + other.name);
 
         if (other.gameObject.GetComponent<Enemy>())
         {
             Debug.Log("Fire hit enemy");
             if (isPlayers)
             {
-                Debug.Log("Damaging Enemy");
+                //Debug.Log("Damaging Enemy");
                 other.gameObject.GetComponent<Enemy>().TakeDamage(damage, damageType);
                 Destroy(this.gameObject);
             }                
@@ -47,15 +49,23 @@ public class Projectile : MonoBehaviour {
 
     void Update()
     {
-        if (fired)
+        if (fired && !thrown)
         {
             transform.position = transform . position + (direction * speed * Time.deltaTime);
         }		
 	}
 
-    public void Fire(float dmg, Effects type, Vector3 dir, bool player)
+    public void Fire(float dmg, Effects type, Vector3 dir, bool player, bool magic = false)
     {
-        Debug.Log("Fired");
+        if (magic)
+        {
+            this.GetComponent<Rigidbody>().isKinematic = false;
+            this.GetComponent<Rigidbody>().AddForce(dir.x * 2.0f, dir.y * 2.0f, dir.z * 2.0f, ForceMode.Impulse);
+            thrown = true;
+        }
+        else
+            thrown = false; 
+
         fired = true;
         isPlayers = player;
         direction = dir;

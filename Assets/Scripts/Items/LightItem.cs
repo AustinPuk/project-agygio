@@ -8,15 +8,15 @@ public class LightItem : Item {
     [Header("Light Parameters")]
 
     [SerializeField]
-    private GameObject light;
+    private GameObject myLight;
 
     protected override void Update()
     {
         base.Update();
         if (isActive)
-            light.SetActive(true);
+            myLight.SetActive(true);
         else if (!isActive)
-            light.SetActive(false);
+            myLight.SetActive(false);
     }
 
     public override void OnPassive()
