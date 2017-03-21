@@ -9,11 +9,10 @@ public class TerrainType : MonoBehaviour{
     public Vector2 treeRange;
     public GameObject[] rocks;
     public Vector2 rockRange;
-
     public GameObject[] items;
-    public float[] itemChances; // Between 0 to 1
+    public Vector2 itemRange;
     public GameObject[] enemies;
-    public float[] enemyChances;
+    public Vector2 enemyRange;
 
     [Header("Height Map Paramters")]
     public int HEIGHT_MAP_POWER = 8;

@@ -10,9 +10,12 @@ public class Enemy : MonoBehaviour
     private string enemyType;
 
     [SerializeField]
-    private int level;   
-    
+    private int level;
+
     [Header("Combat Parameters")]
+
+    [SerializeField]
+    private float activeDist;
 
     [SerializeField]
     private float attackSpeed; // Attacks per second
@@ -73,10 +76,16 @@ public class Enemy : MonoBehaviour
         attackTimer = 0.0f;
 
         agent = GetComponent<EnemyMovement>();
+
+        if (!patrolCenter)
+            patrolCenter = this.transform;
     }
 		
 	void Update ()
-    {            
+    {
+        if (!CheckActive())
+            return;
+
         CheckDeath();
         Regen(Time.deltaTime);
 
@@ -89,6 +98,14 @@ public class Enemy : MonoBehaviour
     }   
 
     /**************************** Update Functions ******************************/
+
+    bool CheckActive()
+    {
+        if (Vector3.Distance(transform.position, Player.instance.transform.position) < activeDist)
+            return true;
+        else
+            return false;
+    }
 
     void CheckDeath()
     {

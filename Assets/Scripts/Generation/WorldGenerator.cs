@@ -173,6 +173,7 @@ public class WorldGenerator : MonoBehaviour
 
     private void GenerateTrees()
     {        
+        // Generates tree in random location for each terrain patch
         foreach(TerrainGenerator terrain in terrains)
         {
             TerrainType type = terrain.GetTerrainType();
@@ -203,13 +204,68 @@ public class WorldGenerator : MonoBehaviour
 
     private void GenerateRocks()
     {
-        // Similar to Generate Trees
+        // Same as generate trees, but with rocks
+        foreach (TerrainGenerator terrain in terrains)
+        {
+            TerrainType type = terrain.GetTerrainType();
+
+            float middle = terrain.GetTerrainSize() / 2.0f;
+            float min_x = -middle;
+            float min_z = -middle;
+            float max_x = middle;
+            float max_z = middle;
+
+            int numRocks = Random.Range((int)type.rockRange.x,
+                                        (int)type.rockRange.y);
+
+            for (int i = 0; i < numRocks; i++)
+            {
+                GameObject newRock = Instantiate(type.rocks[Random.Range(0, type.rocks.Length)]);
+
+                float x = Random.Range(min_x, max_x);
+                float z = Random.Range(min_z, max_z);
+                float y = terrain.HeightLookup(x, z);
+
+                newRock.transform.position = new Vector3(x + terrain.transform.position.x, y,
+                                                         z + terrain.transform.position.z);
+                newRock.transform.SetParent(terrain.transform);
+            }
+        }
     }
 
     private void GenerateItems()
     {
         // Generate random items scattered around the area.
         // Types of terrains have different probabilties for each item
+
+        // For now, just doing it the same as trees/rocks. Not enuf items for better formulas.
+        
+        foreach (TerrainGenerator terrain in terrains)
+        {
+            TerrainType type = terrain.GetTerrainType();
+
+            float middle = terrain.GetTerrainSize() / 2.0f;
+            float min_x = -middle;
+            float min_z = -middle;
+            float max_x = middle;
+            float max_z = middle;
+
+            int numItems = Random.Range((int)type.itemRange.x,
+                                        (int)type.itemRange.y);
+
+            for (int i = 0; i < numItems; i++)
+            {
+                GameObject newItem = Instantiate(type.items[Random.Range(0, type.items.Length)]);
+
+                float x = Random.Range(min_x, max_x);
+                float z = Random.Range(min_z, max_z);
+                float y = terrain.HeightLookup(x, z);
+
+                newItem.transform.position = new Vector3(x + terrain.transform.position.x, y,
+                                                         z + terrain.transform.position.z);
+                newItem.transform.SetParent(terrain.transform);
+            }
+        }
     }
 
     private void GenerateEnemies()
@@ -218,6 +274,35 @@ public class WorldGenerator : MonoBehaviour
         // multiple types of enemies. Once enemies are spawned, they take on their own behaviours.
         // Some enemies may disappear in the morning, then reappear at night.
 
+        // For now, just doing it the same as trees/rocks. Not enough enemies and time to offer more
+        // intricate enemy areas and whereabouts. 
+
+        foreach (TerrainGenerator terrain in terrains)
+        {
+            TerrainType type = terrain.GetTerrainType();
+
+            float middle = terrain.GetTerrainSize() / 2.0f;
+            float min_x = -middle;
+            float min_z = -middle;
+            float max_x = middle;
+            float max_z = middle;
+
+            int numItems = Random.Range((int)type.enemyRange.x,
+                                        (int)type.enemyRange.y);
+
+            for (int i = 0; i < numItems; i++)
+            {
+                GameObject newEnemy = Instantiate(type.enemies[Random.Range(0, type.enemies.Length)]);
+
+                float x = Random.Range(min_x, max_x);
+                float z = Random.Range(min_z, max_z);
+                float y = terrain.HeightLookup(x, z);
+
+                newEnemy.transform.position = new Vector3(x + terrain.transform.position.x, y,
+                                                         z + terrain.transform.position.z);
+                newEnemy.transform.SetParent(terrain.transform);
+            }
+        }
 
     }
 }

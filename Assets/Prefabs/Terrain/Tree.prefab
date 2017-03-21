@@ -53,7 +53,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4656752901007214}
-  - component: {fileID: 95106626197762490}
+  - component: {fileID: 65876608586690926}
+  - component: {fileID: 54402144292079844}
+  - component: {fileID: 114209725069330764}
   m_Layer: 12
   m_Name: Tree
   m_TagString: Untagged
@@ -111,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1319083730505430}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.8, y: -0.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4541916054733232}
@@ -247,20 +249,47 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1183352420082434}
   m_Mesh: {fileID: 4300002, guid: 629ada1498554c1458a49ba56ddb2bcf, type: 3}
---- !u!95 &95106626197762490
-Animator:
-  serializedVersion: 3
+--- !u!54 &54402144292079844
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1319083730505430}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!65 &65876608586690926
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1319083730505430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.66701984, y: 2.7321854, z: 0.54514754}
+  m_Center: {x: -0.16649032, y: 1.2017899, z: -0.038329124}
+--- !u!114 &114209725069330764
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1319083730505430}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 629ada1498554c1458a49ba56ddb2bcf, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7154ec75c9f086341b2af8701ff1fa48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  producedItem: {fileID: 1883389606014524, guid: 4039788c77ab34b4d940d060975e4757,
+    type: 2}
+  requiredTool: {fileID: 114616991721637140, guid: 9bd1d6f6ad51aec409930eab5284fd87,
+    type: 2}
+  health: 5
+  minVelocity: 0
