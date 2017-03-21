@@ -45,43 +45,155 @@ public class WorldGenerator : MonoBehaviour
 
     private void GenerateWorld()
     {
-        List<Vector3> fixedPoints = new Vector3(terrains[0].getSize(0), terrains[0].ty)
-        // Generate Center World        
-        terrains[0].GenerateTerrain();
-
-
-        // Generate Corner Terrains
-
+        GenerateTerrain();       
     }
 
     public float HeightLookup(float x, float z)
     {
-        // Returns the height at the given location, spanning all 9 terrains.
-        return 0; 
+        float size = terrains[1].GetTerrainSize();
+        // Bounds Check
+        if (x < (size * -1.5f) || x > (size * 1.5f) ||
+            z < (size * -1.5f) || x > (size * 1.5f))
+        {
+            Debug.Log("Error: Height Lookup Invalid");
+            return 0.0f;
+        }            
+
+        // Finds nearest terrain
+        TerrainGenerator closestTerrain = terrains[1];
+        float minDist = Mathf.Infinity;
+        foreach (TerrainGenerator terrain in terrains)
+        {
+            float dist = Vector2.Distance(new Vector2(terrain.transform.position.x, terrain.transform.position.z), new Vector2(x, z));
+            if (dist < minDist)
+            {
+                closestTerrain = terrain;
+                minDist = dist;
+            }                
+        }
+
+        Debug.Log("World Height: " + x + " " + z + " " + closestTerrain);
+        return closestTerrain.HeightLookup(x - closestTerrain.transform.position.x, z - closestTerrain.transform.position.z);
     }
 
     /*************** Generation Functions *********************/
 
-    private void GenerateTrees(float size, int numTrees, GameObject[] trees)
+    private void GenerateTerrain()
     {
-        // TODO: Change parameters to allow offset to specific terrain are we are currently in
-        float middle = size / 2.0f;
-        float min_x = -middle;
-        float min_z = -middle;
-        float max_x = middle;
-        float max_z = middle;
+        // Initialize all terrains first
+        foreach (TerrainGenerator terrain in terrains)
+            terrain.Initialize();
 
-        for (int i = 0; i < numTrees; i++)
+        int gridSize = terrains[1].GetGridSize(); // All terrains should have same grid size
+
+        // terrains[0].GenerateTerrain(); // Special, not used
+
+        // Center
+        terrains[1].GenerateTerrain();
+
+        // Generate adjacent first, then corners to minimize overall influence
+        List<Vector3> fixedPoints = new List<Vector3>();
+
+        // Side Terrains Share Side with Center       
+
+        // Top Center        
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
+            fixedPoints.Add(new Vector3(i, 0, terrains[1].HeightLookup(i, gridSize - 1, gridSize - 1, false)));
+        terrains[3].AddFixedPoints(fixedPoints);
+        terrains[3].GenerateTerrain();
+
+        // Left Middle
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
+            fixedPoints.Add(new Vector3(gridSize - 1, i, terrains[1].HeightLookup(0, i, gridSize - 1, false)));
+        terrains[5].AddFixedPoints(fixedPoints);
+        terrains[5].GenerateTerrain();
+
+        // Right Middle
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
+            fixedPoints.Add(new Vector3(0, i, terrains[1].HeightLookup(gridSize - 1, i, gridSize - 1, false)));
+        terrains[6].AddFixedPoints(fixedPoints);
+        terrains[6].GenerateTerrain();
+
+        // Bot Center
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
+            fixedPoints.Add(new Vector3(i, gridSize - 1, terrains[1].HeightLookup(i, 0, gridSize - 1, false)));
+        terrains[8].AddFixedPoints(fixedPoints);
+        terrains[8].GenerateTerrain();
+
+        // Corner Terrains Share Side Two Adjacent
+
+        // Top Left
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
         {
-            GameObject newTree = Instantiate(trees[Random.Range(0, trees.Length)]);
-
-            float x = Random.Range(min_x, max_x);
-            float z = Random.Range(min_z, max_z);
-            float y = HeightLookup(x, z);
-
-            newTree.transform.position = new Vector3(x, y, z);
-            newTree.transform.SetParent(this.transform);
+            fixedPoints.Add(new Vector3(gridSize - 1, i, terrains[3].HeightLookup(0, i, gridSize - 1, false)));
+            fixedPoints.Add(new Vector3(i, 0, terrains[5].HeightLookup(i, gridSize - 1, gridSize - 1, false)));
         }
+        terrains[2].AddFixedPoints(fixedPoints);
+        terrains[2].GenerateTerrain();
+
+        // Top Right
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
+        {
+            fixedPoints.Add(new Vector3(0, i, terrains[3].HeightLookup(gridSize - 1, i, gridSize - 1, false)));
+            fixedPoints.Add(new Vector3(i, 0, terrains[6].HeightLookup(i, gridSize - 1, gridSize - 1, false)));
+        }
+        terrains[4].AddFixedPoints(fixedPoints);
+        terrains[4].GenerateTerrain();
+
+        // Bot Left
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
+        {
+            fixedPoints.Add(new Vector3(i, gridSize - 1, terrains[5].HeightLookup(i, 0, gridSize - 1, false)));
+            fixedPoints.Add(new Vector3(gridSize - 1, i, terrains[8].HeightLookup(0, i, gridSize - 1, false)));
+        }
+        terrains[7].AddFixedPoints(fixedPoints);
+        terrains[7].GenerateTerrain();
+
+        // bot Right
+        fixedPoints.Clear();
+        for (int i = 0; i < gridSize; i++)
+        {
+            fixedPoints.Add(new Vector3(i, gridSize - 1, terrains[6].HeightLookup(i, 0, gridSize - 1, false)));
+            fixedPoints.Add(new Vector3(0, i, terrains[8].HeightLookup(gridSize - 1, i, gridSize - 1, false)));
+        }
+        terrains[9].AddFixedPoints(fixedPoints);
+        terrains[9].GenerateTerrain();
+    }
+
+    private void GenerateTrees()
+    {        
+        foreach(TerrainGenerator terrain in terrains)
+        {
+            TerrainType type = terrain.GetTerrainType();
+            
+            float middle = terrain.GetTerrainSize() / 2.0f;
+            float min_x = -middle;
+            float min_z = -middle;
+            float max_x = middle;
+            float max_z = middle;
+
+            int numTrees = Random.Range((int) type.treeRange.x, 
+                                        (int) type.treeRange.y);
+
+            for (int i = 0; i < numTrees; i++)
+            {
+                GameObject newTree = Instantiate(type.trees[Random.Range(0, type.trees.Length)]);
+
+                float x = Random.Range(min_x, max_x);
+                float z = Random.Range(min_z, max_z);
+                float y = HeightLookup(x, z);
+
+                newTree.transform.position = new Vector3(x, y, z);
+                newTree.transform.SetParent(this.transform);
+            }
+        }        
     }
 
     private void GenerateRocks(float size, int numRocks, GameObject[] rocks)

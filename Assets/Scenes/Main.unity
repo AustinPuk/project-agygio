@@ -152,7 +152,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 41.692, y: -25.199001, z: -4.5}
 --- !u!1 &45254127
 GameObject:
@@ -275,6 +275,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 63596459}
+  - component: {fileID: 63596460}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -298,8 +299,32 @@ Transform:
   - {fileID: 1127504477}
   - {fileID: 1510898882}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &63596460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 63596458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d9cb4b386388948b84570357247325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seed: 20
+  saveFile: 0
+  terrains:
+  - {fileID: 1785058322}
+  - {fileID: 1785058322}
+  - {fileID: 546261492}
+  - {fileID: 86727878}
+  - {fileID: 1310448084}
+  - {fileID: 445836972}
+  - {fileID: 166042775}
+  - {fileID: 1505908538}
+  - {fileID: 1876390215}
+  - {fileID: 1473808260}
 --- !u!1 &74910953
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +516,7 @@ GameObject:
   - component: {fileID: 86727876}
   - component: {fileID: 86727878}
   m_Layer: 8
-  m_Name: Terrain (2)
+  m_Name: Terrain TC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,8 +575,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &86727879
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -919,7 +944,7 @@ GameObject:
   - component: {fileID: 166042773}
   - component: {fileID: 166042775}
   m_Layer: 8
-  m_Name: Terrain (5)
+  m_Name: Terrain MR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,8 +1003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &166042776
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2165,7 +2190,7 @@ GameObject:
   - component: {fileID: 445836970}
   - component: {fileID: 445836972}
   m_Layer: 8
-  m_Name: Terrain (4)
+  m_Name: Terrain ML
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2224,8 +2249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &445836973
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2498,11 +2523,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.4750013
+      value: 3.48
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -6.1489997
+      value: -3.35
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2602,7 +2627,7 @@ GameObject:
   - component: {fileID: 546261490}
   - component: {fileID: 546261492}
   m_Layer: 8
-  m_Name: Terrain (1)
+  m_Name: Terrain TL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2661,8 +2686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: 25584c8ce69a2ae488c6fb0e1ffed483, type: 2}
 --- !u!23 &546261493
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2897,11 +2922,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.0930004
+      value: 1.09
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -5.4829993
+      value: -2.69
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4074,11 +4099,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15.498001
+      value: -15.5
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.6650009
+      value: 2.13
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalRotation.x
@@ -5469,7 +5494,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1050824325 stripped
 Transform:
@@ -6340,7 +6365,7 @@ Transform:
   - {fileID: 1188208044}
   - {fileID: 424682929}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1260544079
 MonoBehaviour:
@@ -6469,7 +6494,7 @@ GameObject:
   - component: {fileID: 1310448082}
   - component: {fileID: 1310448084}
   m_Layer: 8
-  m_Name: Terrain (3)
+  m_Name: Terrain TR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6528,8 +6553,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &1310448085
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7258,7 +7283,7 @@ Transform:
   - {fileID: 971461590}
   - {fileID: 1769825644}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1446929525 stripped
 Transform:
@@ -7279,7 +7304,7 @@ GameObject:
   - component: {fileID: 1473808258}
   - component: {fileID: 1473808260}
   m_Layer: 8
-  m_Name: Terrain (8)
+  m_Name: Terrain BR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7338,8 +7363,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &1473808261
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7442,7 +7467,7 @@ GameObject:
   - component: {fileID: 1505908536}
   - component: {fileID: 1505908538}
   m_Layer: 8
-  m_Name: Terrain (6)
+  m_Name: Terrain BL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7501,8 +7526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &1505908539
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8139,11 +8164,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.0679998
+      value: -2.07
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -4.807
+      value: -2.01
       objectReference: {fileID: 0}
     - target: {fileID: 4348472293772124, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8992,7 +9017,7 @@ Transform:
   - {fileID: 1919808688}
   - {fileID: 789028167}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1710538430
 Prefab:
@@ -9654,8 +9679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &1785058323
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9874,7 +9899,7 @@ GameObject:
   - component: {fileID: 1876390213}
   - component: {fileID: 1876390215}
   m_Layer: 8
-  m_Name: Terrain (7)
+  m_Name: Terrain BC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9933,8 +9958,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1eb6941054414449825560e1ddab4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleTypes: []
-  fixedPoints: []
+  possibleTypes:
+  - {fileID: 114895438832261188, guid: f2d0dd420a2223f46bdff929169af612, type: 2}
 --- !u!23 &1876390216
 MeshRenderer:
   m_ObjectHideFlags: 0

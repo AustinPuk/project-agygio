@@ -17,8 +17,9 @@ public class TerrainType : MonoBehaviour{
 
     [Header("Height Map Paramters")]
     public int HEIGHT_MAP_POWER = 8;
-    public float HEIGHT_MAP_MAX = 10.0f;
-    public float HEIGHT_RANDOMNESS_SCALE = 100.0f;
+    public float BASE_HEIGHT = 10.0f;    
+    public float HEIGHT_RANDOMNESS_SCALE = 50.0f;
+    public bool CAN_DIP = false;
 
     [Header("Terrain Parameters")]
     public int TERRAIN_RESOLUTION = 30;

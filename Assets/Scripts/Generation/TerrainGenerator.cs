@@ -17,12 +17,14 @@ public class TerrainGenerator : MonoBehaviour {
     List<List<float>> heightMap;
     private float smoothness;
 
-    public void Start()
+    public void Initialize()
     {
+        fixedPoints = new List<Vector3>();
+
         // Get initial values
         type = possibleTypes[Random.Range(0, possibleTypes.GetLength(0))];
         foreach (Vector3 point in type.fixedPoints)
-            AddFixedPoint(point);
+            AddFixedPoint(point);        
     }
 
     public void GenerateTerrain()
@@ -32,7 +34,7 @@ public class TerrainGenerator : MonoBehaviour {
 
         heightMap = new List<List<float>>();
 
-        GenerateHeightMap(HEIGHT_MAP_SIZE, type.HEIGHT_MAP_MAX, VILLAGE_DIAMETER, type.HEIGHT_RANDOMNESS_SCALE, true, type.TERRAIN_SMOOTHNESS);
+        GenerateHeightMap(HEIGHT_MAP_SIZE, type.BASE_HEIGHT, VILLAGE_DIAMETER, type.HEIGHT_RANDOMNESS_SCALE, true, type.TERRAIN_SMOOTHNESS);
         GenerateMesh(type.TERRAIN_SIZE, type.TERRAIN_RESOLUTION, 0.0f, Mathf.Infinity);        
 
         GetComponent<MeshCollider>().sharedMesh = mesh;
@@ -149,18 +151,84 @@ public class TerrainGenerator : MonoBehaviour {
                 heightMap[i].Add(-1.0f);
             }
         }
+                
+        //Initialize Four corners to some value
+        heightMap[0][0] = type.BASE_HEIGHT;
+        heightMap[0][size - 1] = type.BASE_HEIGHT;
+        heightMap[size - 1][0] = type.BASE_HEIGHT;
+        heightMap[size - 1][size - 1] = type.BASE_HEIGHT;
+        
+        // This part is where fixed points should be placed
+        foreach (Vector3 point in fixedPoints)
+            heightMap[(int)point.x][(int)point.y] = point.z;
 
-        // This part is where fixed poinst should be placed
+        /*
+        // Rows Test
+        for (int x = 0; x < size; x++)
+        {
+            for (int y = 0; y < size; y++)
+            {
+                if ((x > 5 && x < 25) || (x > size - 40 && x < size - 10))
+                    heightMap[x][y] = 50.0f;
+            }
+        }
+        */
 
-        //Initialize Four corners to be ground level
-        heightMap[0][0] = max_height / 2.0f;
-        heightMap[0][size - 1] = max_height / 2.0f;
-        heightMap[size - 1][0] = max_height / 2.0f;
-        heightMap[size - 1][size - 1] = max_height / 2.0f;       
+        /*
+        //Offset of Village on Island, Round Plateau.
+        float r_ratio_offset = 0.5f; //Row <----Currnently, Code only works for when village is at center of island.
+        float c_ratio_offset = 0.5f; //Col
+        int village_mid_r = (int) (size * r_ratio_offset);
+        int village_mid_c = (int) (size * c_ratio_offset);
 
-        //Diamond Square Algorithm
+        int radius = village_diameter / 2;
 
-        int stepsize = size - 1;
+        for (int r = village_mid_r - radius; r <= village_mid_r + radius; r++)
+        {
+            for (int c = village_mid_c - radius; c <= village_mid_c + radius; c++)
+            {
+                float dist = Vector2.Distance(new Vector2(r, c), new Vector2(village_mid_r, village_mid_c));
+                //fprintf(stderr, "Dist: %f\n", dist);
+                if (dist <= radius)
+                {
+                    heightMap[r][c] = 40.0f;
+                }
+            }
+        }
+        */
+
+        /*
+        //Makes a ramp to the plateau	
+        if (ramp)
+        {
+            float start_slope = 1.0f;
+            float end_slope = 20.0f;
+            float widen_offset = 5.0f;
+            unsigned int initial_widen = 5;
+
+            for (unsigned int c = village_mid_c + radius; c < village_mid_c + radius + end_slope; c++)
+            {
+                float ratio = (village_mid_c + radius + end_slope - (float)c) / (end_slope - start_slope);
+                unsigned int widen = (unsigned int)(widen_offset * (1.0f - ratio));
+            unsigned int opening_size = initial_widen + widen;
+            for (unsigned int r = village_mid_r - opening_size; r < village_mid_r + opening_size; r++)
+            {
+                if (c <= village_mid_c + radius + start_slope)
+                {
+                    height_map[r][c] = max_height;
+                }
+                else
+                {
+                    float diff = max_height - height_map[r][c];
+                    height_map[r][c] = max_height - (diff * (1.f - ratio));
+                }
+            }
+        }
+        */
+
+    //Diamond Square Algorithm
+
+    int stepsize = size - 1;
 
         //Recursively creates height map
         DiamondSquare(stepsize, size, scale);
@@ -237,7 +305,7 @@ public class TerrainGenerator : MonoBehaviour {
         float sum = (a + b + c + d);
 
         heightMap[x][y] = (sum / num) + (r * scale);
-        if (heightMap[x][y] < 0)
+        if (!type.CAN_DIP && heightMap[x][y] < 0)
             heightMap[x][y] = 0;
     }
 
@@ -282,18 +350,34 @@ public class TerrainGenerator : MonoBehaviour {
         float sum = (a + b + c + d);
 
         heightMap[x][y] = (sum / num) + (r * scale);
-        if (heightMap[x][y] < 0)
+        if (!type.CAN_DIP  && heightMap[x][y] < 0)
             heightMap[x][y] = 0;
     }
     
     /********************** Public Functions **************************/
 
-    public float HeightLookup(float x, float y)
+    // x and y is in respect to the world coordinates, assuming terrain's center is at (0,0)
+    // So bounds are - size / 2.0f -> size / 2.0f
+    public float HeightLookup(float x, float y, float size = 0, bool atCenter = true)
     {
-        float length = type.TERRAIN_SIZE;
+        float length = (size == 0) ? type.TERRAIN_SIZE : size;
         float mid = length / 2.0f;
-        x = ((x + mid) / length) * ((float)heightMap.Count - 1.0f);
-        y = ((y + mid) / length) * ((float)heightMap.Count - 1.0f);
+
+        // Debug.Log("Height Lookup: " + x + " " + y);
+
+        if (atCenter)
+        {
+            // (0, 0) is at center of terrain
+            x = ((x + mid) / length) * ((float)heightMap.Count - 1.0f);
+            y = ((y + mid) / length) * ((float)heightMap.Count - 1.0f);
+
+        }
+        else
+        {
+            // (0, 0) is at lowest corner of terrain
+            x = ((x) / length) * ((float)heightMap.Count - 1.0f);
+            y = ((y) / length) * ((float)heightMap.Count - 1.0f);
+        }                
 
         int x0 = (int)Mathf.Floor(x);
         int x1 = (int)Mathf.Ceil(x);
@@ -318,18 +402,29 @@ public class TerrainGenerator : MonoBehaviour {
         return (h0 * (1.0f - ry)) + (h1 * ry);
     }
 
-    public TerrainType GetType()
+    public TerrainType GetTerrainType()
     {
         return type;
     }
 
-    public float GetSize()
+    public float GetTerrainSize()
     {
         return type.TERRAIN_SIZE;
+    }
+
+    public int GetGridSize()
+    {
+        return (int)Mathf.Pow(2, type.HEIGHT_MAP_POWER) + 1;
     }
 
     public void AddFixedPoint(Vector3 vec)
     {
         fixedPoints.Add(vec);
+    }
+
+    public void AddFixedPoints(List<Vector3> points)
+    {
+        foreach (Vector3 point in points)            
+            AddFixedPoint(point);
     }
 }
