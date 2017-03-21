@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ab3bfceaf0f464c80da8de01998b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trees: []
-  treeRange: {x: 0, y: 0}
+  trees:
+  - {fileID: 1319083730505430, guid: 069fe4e56045e264f8fe3746b4f0f348, type: 2}
+  treeRange: {x: 100, y: 180}
   rocks: []
   rockRange: {x: 0, y: 0}
   items: []

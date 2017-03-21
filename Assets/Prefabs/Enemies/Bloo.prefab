@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 114499732443895900}
   - component: {fileID: 114543000528676134}
   m_Layer: 11
-  m_Name: Bloo 1
+  m_Name: Bloo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

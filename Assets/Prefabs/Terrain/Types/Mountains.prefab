@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ab3bfceaf0f464c80da8de01998b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trees: []
-  treeRange: {x: 0, y: 0}
+  trees:
+  - {fileID: 1319083730505430, guid: 069fe4e56045e264f8fe3746b4f0f348, type: 2}
+  treeRange: {x: 0, y: 30}
   rocks: []
   rockRange: {x: 0, y: 0}
   items: []
@@ -60,8 +61,8 @@ MonoBehaviour:
   enemies: []
   enemyChances: []
   HEIGHT_MAP_POWER: 8
-  BASE_HEIGHT: 30
-  HEIGHT_RANDOMNESS_SCALE: 20
+  BASE_HEIGHT: 60
+  HEIGHT_RANDOMNESS_SCALE: 10
   CAN_DIP: 0
   TERRAIN_RESOLUTION: 30
   TERRAIN_SIZE: 100

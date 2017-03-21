@@ -45,7 +45,11 @@ public class WorldGenerator : MonoBehaviour
 
     private void GenerateWorld()
     {
-        GenerateTerrain();       
+        GenerateTerrain();
+        GenerateTrees();
+        GenerateRocks();
+        GenerateItems();
+        GenerateEnemies();
     }
 
     public float HeightLookup(float x, float z)
@@ -188,26 +192,27 @@ public class WorldGenerator : MonoBehaviour
 
                 float x = Random.Range(min_x, max_x);
                 float z = Random.Range(min_z, max_z);
-                float y = HeightLookup(x, z);
+                float y = terrain.HeightLookup(x, z);
 
-                newTree.transform.position = new Vector3(x, y, z);
-                newTree.transform.SetParent(this.transform);
+                newTree.transform.position = new Vector3(x + terrain.transform.position.x, y, 
+                                                         z + terrain.transform.position.z);
+                newTree.transform.SetParent(terrain.transform);
             }
         }        
     }
 
-    private void GenerateRocks(float size, int numRocks, GameObject[] rocks)
+    private void GenerateRocks()
     {
         // Similar to Generate Trees
     }
 
-    private void GenerateItems(float size, int numItems, GameObject[] items, float[] itemChances)
+    private void GenerateItems()
     {
         // Generate random items scattered around the area.
         // Types of terrains have different probabilties for each item
     }
 
-    private void GenerateEnemies(float size, int numEnemies, GameObject[] enemies, float[] enemyChances)
+    private void GenerateEnemies()
     {
         // Generates random enemies. This will be more strict, a single terrain shouldn't usually have
         // multiple types of enemies. Once enemies are spawned, they take on their own behaviours.
