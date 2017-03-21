@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour {
 
         if (Vector3.Distance(transform.position, destination) <= stopDistance)
         {
-            Debug.Log("Enemy: Stop");
+            //Debug.Log("Enemy: Stop");
             destination = new Vector3(0.0f, 0.0f, 0.0f);
             return;
         }

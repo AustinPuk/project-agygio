@@ -510,7 +510,8 @@ MonoBehaviour:
   inBackpack: 0
   canStore: 0
   isSelected: 0
-  light: {fileID: 1918224509027126}
+  heldHand: {fileID: 0}
+  myLight: {fileID: 1918224509027126}
 --- !u!114 &114936998131994090
 MonoBehaviour:
   m_ObjectHideFlags: 1

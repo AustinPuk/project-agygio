@@ -35,12 +35,13 @@ public class TerrainGenerator : MonoBehaviour {
         heightMap = new List<List<float>>();
 
         GenerateHeightMap(HEIGHT_MAP_SIZE, type.BASE_HEIGHT, VILLAGE_DIAMETER, type.HEIGHT_RANDOMNESS_SCALE, true, type.TERRAIN_SMOOTHNESS);
-        GenerateMesh(type.TERRAIN_SIZE, type.TERRAIN_RESOLUTION, 0.0f, Mathf.Infinity);        
+        GenerateMesh(type.TERRAIN_SIZE, type.TERRAIN_RESOLUTION);
 
         GetComponent<MeshCollider>().sharedMesh = mesh;
+        GetComponent<Renderer>().material = type.terrainMaterial;
     }
 
-    private void GenerateMesh(float size, int numPoints, float minHeight, float maxHeight)
+    private void GenerateMesh(float size, int numPoints)
     {
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
         mesh.name = "Procedural Terrain";
@@ -69,9 +70,6 @@ public class TerrainGenerator : MonoBehaviour {
             for (float z = min_z; z <= (max_z - step_size); z += step_size)
             {
                 float h1 = HeightLookup(x, z);
-
-                if (h1 < minHeight || h1 > maxHeight)
-                    continue;
 
                 float h2 = HeightLookup(x + step_size, z);
                 float h3 = HeightLookup(x, z + step_size);

@@ -100,6 +100,7 @@ public class WorldGenerator : MonoBehaviour
     public float HeightLookup(float x, float z)
     {
         float size = terrains[1].GetTerrainSize();
+
         // Bounds Check
         if (x < (size * -1.5f) || x > (size * 1.5f) ||
             z < (size * -1.5f) || x > (size * 1.5f))

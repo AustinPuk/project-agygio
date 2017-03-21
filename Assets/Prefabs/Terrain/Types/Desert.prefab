@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4884858303726826}
   - component: {fileID: 114895438832261188}
   m_Layer: 0
-  m_Name: Flat
+  m_Name: Desert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,28 +51,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ab3bfceaf0f464c80da8de01998b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trees:
-  - {fileID: 1319083730505430, guid: 069fe4e56045e264f8fe3746b4f0f348, type: 2}
-  treeRange: {x: 0, y: 10}
+  trees: []
+  treeRange: {x: 0, y: 0}
   rocks:
   - {fileID: 1254170763370394, guid: 7f3355f32e4c0374dab8396aa9c740b0, type: 2}
-  rockRange: {x: 0, y: 0}
+  rockRange: {x: 50, y: 80}
   items:
-  - {fileID: 1626250593003904, guid: 4c68dbbac51bfd64a99c93248eb4bbfd, type: 2}
   - {fileID: 1893796764076796, guid: 510121535bef4e543b078a543f9d8dfb, type: 2}
-  - {fileID: 1657735237647884, guid: 80dd306bb1a8f7d4499f2f26a867e649, type: 2}
-  - {fileID: 1021950382395066, guid: a385c596ac3ea29448b73af910639f22, type: 2}
-  itemRange: {x: 0, y: 0}
+  - {fileID: 1656271878063518, guid: 9c5072029251a2e4f8934f24b0ad3e11, type: 2}
+  itemRange: {x: 10, y: 40}
   enemies:
   - {fileID: 1843993838453764, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
   - {fileID: 1313463301408540, guid: 8b510786eaee7524589acf4875101705, type: 2}
-  enemyRange: {x: 0, y: 0}
+  enemyRange: {x: 5, y: 15}
   HEIGHT_MAP_POWER: 8
-  BASE_HEIGHT: 1
-  HEIGHT_RANDOMNESS_SCALE: 0
-  CAN_DIP: 0
+  BASE_HEIGHT: 10
+  HEIGHT_RANDOMNESS_SCALE: 30
+  CAN_DIP: 1
   TERRAIN_RESOLUTION: 30
   TERRAIN_SIZE: 100
-  TERRAIN_SMOOTHNESS: 1.2
-  terrainMaterial: {fileID: 2100000, guid: 4353673109153a94a80819fbf16d8b37, type: 2}
+  TERRAIN_SMOOTHNESS: 1.3
+  terrainMaterial: {fileID: 2100000, guid: 2fd6c5e653ce455468948157eacda6db, type: 2}
   fixedPoints: []

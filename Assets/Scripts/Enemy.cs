@@ -159,7 +159,9 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(target.position, transform.position) < combatRange)
+        float range = (WorldGenerator.instance.isDay) ? combatRange * 2 : combatRange;
+
+        if (Vector3.Distance(target.position, transform.position) < range)
         {
             if (!projectile) // Melee
             {

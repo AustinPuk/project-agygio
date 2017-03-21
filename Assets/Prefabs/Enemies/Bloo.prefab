@@ -120,8 +120,8 @@ GameObject:
   - component: {fileID: 4348472293772124}
   - component: {fileID: 54012397097222452}
   - component: {fileID: 65849387719387370}
-  - component: {fileID: 114499732443895900}
   - component: {fileID: 114543000528676134}
+  - component: {fileID: 114499732443895900}
   m_Layer: 11
   m_Name: Bloo
   m_TagString: Untagged
@@ -183,14 +183,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843993838453764}
-  m_LocalRotation: {x: -0, y: 0.6109638, z: -0, w: 0.7916586}
-  m_LocalPosition: {x: 34.47, y: 10.118, z: 2.78}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.0484, y: -2.07, z: -2.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4477707600911530}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 75.318, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4477707600911530
 Transform:
   m_ObjectHideFlags: 1
@@ -504,9 +504,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Bloo
   level: 1
+  activeDist: 30
   attackSpeed: 1
   combatRange: 1.5
-  sightRange: 5
+  sightRange: 10
   patrolCenter: {fileID: 0}
   patrolRange: 10
   patrolInterval: 5
@@ -520,8 +521,6 @@ MonoBehaviour:
   health: 0
   regenRate: 0
   baseDamage: 0
-  test: 0
-  test1: 30
 --- !u!114 &114543000528676134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -533,6 +532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dfdab37b337c604ca0d808a97927842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 3
   height: 1.2
   stopDistance: 1.5

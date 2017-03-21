@@ -24,6 +24,7 @@ public class TerrainType : MonoBehaviour{
     public int TERRAIN_RESOLUTION = 30;
     public float TERRAIN_SIZE = 100.0f;
     public float TERRAIN_SMOOTHNESS = 1.2f; // Lower to make rough    
+    public Material terrainMaterial;
 
     [Header("Fixed Points")]
     public List<Vector3> fixedPoints;
