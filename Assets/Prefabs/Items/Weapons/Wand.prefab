@@ -318,7 +318,7 @@ MonoBehaviour:
   isDiscovered: 0
   craftMenuItem: 0
   requiredItemOne: {fileID: 114497482003321354}
-  numberItemOne: 50
+  numberItemOne: 100
   requiredItemTwo: {fileID: 0}
   numberItemTwo: 0
   isHeld: 0
