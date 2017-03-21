@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Food : Item
 {
+    [Header("Food Parameters")]
+
     [SerializeField]
-    private float eatTime = 2.0f;
+    private float eatTime = 1.3f;
 
     [Tooltip("Amount of hunger that this item restores")]
     [SerializeField]

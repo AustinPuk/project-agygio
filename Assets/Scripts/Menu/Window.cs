@@ -50,7 +50,7 @@ public abstract class Window : MonoBehaviour
         // Adjust Scale
         float newScale = spacing / Vector3.Magnitude(item.GetComponent<BoxCollider>().size);
         item.transform.localScale = new Vector3(newScale, newScale, newScale);
-        item.transform.localRotation = item.storeRotate.localRotation;
+        item.transform.localRotation = Quaternion.Euler(item.storeRotate);
     }
 
     public virtual void SelectItem(Item item)

@@ -17,6 +17,9 @@ public class PlayerHand : MonoBehaviour {
     private Item heldItem;
     private bool holdingTrigger; // Prevents multiple inputs when holding down button
 
+    public Vector3 velocity;
+    private Vector3 lastPos; 
+
     // Hacky window moving
     private GameObject holdWindow;    
     [SerializeField]
@@ -29,11 +32,17 @@ public class PlayerHand : MonoBehaviour {
     {
         windowOnly = 1 << LayerMask.NameToLayer("Window");
         buttonsOnly = 1 << LayerMask.NameToLayer("Buttons");
+        lastPos = transform.position;
     }
     
     
     private void Update ()
-    {        
+    {
+        // Calculates velocity for throwing and stuff
+        velocity = (transform.position - lastPos) / Time.deltaTime;
+        lastPos = transform.position;
+
+        // Hand isn't rendered when holding objects
         if (heldItem)
             GetComponent<Renderer>().enabled = false;
         else

@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedWeapon : Item {
+public class RangedWeapon : Item
+{
+    [Header("Ranged Weapon Parameters")]
 
     [SerializeField]
     private GameObject projectile;

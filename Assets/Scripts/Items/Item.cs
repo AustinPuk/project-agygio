@@ -5,18 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
 public abstract class Item : MonoBehaviour
 {    
-    public string itemName = "Test";
-    public ItemType itemType;
+    public string itemName = "Test";    
     public string description = "Test";
-
-    [SerializeField]
-    protected Transform grabLocation;    
+    public ItemType itemType;
 
     [SerializeField]
     protected MeshRenderer highlight;
 
     [SerializeField]
-    public Transform storeRotate;
+    protected Transform grabLocation;
+
+    [SerializeField]
+    public Vector3 storeRotate;
 
     [SerializeField]
     protected bool initialActiveState;
@@ -97,10 +97,12 @@ public abstract class Item : MonoBehaviour
             return false;
         }        
 
-        Debug.Log("Grabbing");
+        //Debug.Log("Grabbing");
+
         isActive = true;
         isHeld = true;
         heldHand = hand;
+
         transform.SetParent(hand.gameObject.transform);
         transform.localPosition = grabLocation.localPosition;
         transform.localRotation = grabLocation.localRotation;
@@ -109,23 +111,27 @@ public abstract class Item : MonoBehaviour
         GetComponent<Rigidbody>().isKinematic = true;   // Prevents item from being affected by gravity
 
         return true;
-
     }
 
     public virtual void OnDrop()
     {
-        Debug.Log("Dropping");
+        //Debug.Log("Dropping");
+
         if (deactivateOnDrop)
             isActive = false;
 
-        isHeld = false;
-        heldHand = null;
+        isHeld = false;        
         transform.SetParent(null);
 
         if (canStore)
             Backpack.instance.AddItem(this);
         
         GetComponent<BoxCollider>().isTrigger = false;  // Allows item to fall to the floor
-        //GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().isKinematic = false;
+
+        if (!inBackpack)
+            GetComponent<Rigidbody>().velocity = heldHand.velocity;
+
+        heldHand = null;
     }    
 }

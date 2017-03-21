@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 40868378740fcb24fbd62fea98f547b4
-timeCreated: 1490064594
+guid: 735b821a7c71ed64abffa6a0eb550b3f
+timeCreated: 1490069885
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Plane_001
+    4300000: Sphere
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -36,7 +36,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.24
+    globalScale: 0.1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

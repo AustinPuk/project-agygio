@@ -41,40 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4461972174767410}
   m_Layer: 0
-  m_Name: ActualLoc
+  m_Name: GrabLocation
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1667450645386410
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4903264526171122}
-  m_Layer: 0
-  m_Name: StoreRotate
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1801033862222966
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4662718886218274}
-  - component: {fileID: 65575115924408630}
-  - component: {fileID: 54543230873420372}
-  m_Layer: 0
-  m_Name: GrabBox
-  m_TagString: GrabBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +62,7 @@ GameObject:
   - component: {fileID: 114014656514384986}
   m_Layer: 10
   m_Name: ItemBox
-  m_TagString: Untagged
+  m_TagString: GrabBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,15 +88,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016574313095550}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 8.4216, y: 14.925, z: 0.712}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -138.79964, y: 35.519714, z: -27.018866}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4662718886218274}
+  - {fileID: 4695648697733758}
   - {fileID: 4461972174767410}
   - {fileID: 4369887890992170}
-  - {fileID: 4695648697733758}
-  - {fileID: 4903264526171122}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,24 +119,11 @@ Transform:
   m_GameObject: {fileID: 1383760092874452}
   m_LocalRotation: {x: -0.681973, y: -0.045758218, z: 0.05343737, w: 0.7279859}
   m_LocalPosition: {x: 0.02, y: -0.209, z: 0.834}
-  m_LocalScale: {x: 10.000001, y: 10.000002, z: 10.000003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4221176662603266}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -98.868996, y: 115.197, z: -114.573}
---- !u!4 &4662718886218274
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1801033862222966}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.4, z: 0.3}
-  m_Children: []
-  m_Father: {fileID: 4221176662603266}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4695648697733758
 Transform:
   m_ObjectHideFlags: 1
@@ -182,21 +135,8 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.5, z: 0.3}
   m_Children: []
   m_Father: {fileID: 4221176662603266}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4903264526171122
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1667450645386410}
-  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4221176662603266}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
 --- !u!23 &23190281196223774
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -290,21 +230,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!54 &54543230873420372
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1801033862222966}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!54 &54571066537343110
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -338,18 +263,6 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1806789160817232}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65575115924408630
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1801033862222966}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -397,13 +310,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Gun
+  description: Pew pew
   itemType: 3
-  description: KAMEHAMA
-  grabLocation: {fileID: 4461972174767410}
   highlight: {fileID: 23190281196223774}
-  storeRotate: {fileID: 4903264526171122}
+  grabLocation: {fileID: 4461972174767410}
+  storeRotate: {x: -90, y: -90, z: 0}
   initialActiveState: 0
   deactivateOnDrop: 0
+  isDiscovered: 0
+  craftMenuItem: 1
+  requiredItemOne: {fileID: 0}
+  numberItemOne: 0
+  requiredItemTwo: {fileID: 0}
+  numberItemTwo: 0
   isHeld: 0
   inBackpack: 0
   canStore: 0
