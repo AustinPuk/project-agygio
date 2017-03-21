@@ -64,7 +64,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 1843993838453764, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
   - {fileID: 1313463301408540, guid: 8b510786eaee7524589acf4875101705, type: 2}
-  enemyRange: {x: 0, y: 10}
+  enemyRange: {x: 5, y: 10}
   HEIGHT_MAP_POWER: 8
   BASE_HEIGHT: 10
   HEIGHT_RANDOMNESS_SCALE: 20

@@ -64,7 +64,7 @@ public class Player : MonoBehaviour {
     /***************************** Player Event Functions *************************/
     void OnDeath()
     {
-        Debug.Log("Player Dies");
+        //Debug.Log("Player Dies");
         // Dies
         // Some sort of method for transitioning to a main menu / title screen / DARKNESS
     }
@@ -88,13 +88,13 @@ public class Player : MonoBehaviour {
 
     public void Eat(float amount)
     {
-        Debug.Log("Ate " + amount);
+        //Debug.Log("Ate " + amount);
         hunger = Mathf.Clamp(hunger + amount, 0.0f, maxHunger);
     }    
 
     public void TakeDamage(float amount, Vector3 dir, Effects type)
     {
-        Debug.Log("Player: Take Damage");
+        //Debug.Log("Player: Take Damage");
         health -= amount;
 
         VRControls.instance.rightHand.SetHaptic(1.0f, 1.0f, 0.2f);

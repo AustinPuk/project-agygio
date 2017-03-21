@@ -121,7 +121,7 @@ public class PlayerTeleport : MonoBehaviour {
         {
             calculatedLength = contactDistance;
 
-            Debug.Log("Ray Collided With " + collidedWith.collider.name);
+            //Debug.Log("Ray Collided With " + collidedWith.collider.name);
 
             if (collidedWith.collider.gameObject.tag != "Terrain")
             {

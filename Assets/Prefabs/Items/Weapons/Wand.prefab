@@ -410,7 +410,7 @@ MonoBehaviour:
   craftMenuItem: 0
   requiredItemOne: {fileID: 114278203601868306, guid: 80dd306bb1a8f7d4499f2f26a867e649,
     type: 2}
-  numberItemOne: 3
+  numberItemOne: 50
   requiredItemTwo: {fileID: 114396111283057518, guid: 9c5072029251a2e4f8934f24b0ad3e11,
     type: 2}
   numberItemTwo: 1
@@ -426,7 +426,7 @@ MonoBehaviour:
   chargeMax: 3
   startParticles: {fileID: 1637301000852998}
   chargedParticles: {fileID: 1924005714922842}
-  baseDamage: 20
+  baseDamage: 50
   baseEffect: 3
 --- !u!198 &198631502800559852
 ParticleSystem:

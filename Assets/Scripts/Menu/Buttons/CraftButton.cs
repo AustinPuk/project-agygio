@@ -24,12 +24,12 @@ public class CraftButton : MyButton {
             if (item.requiredItemOne && 
                 Backpack.instance.countItem(item.requiredItemOne) >= item.numberItemOne)
             {
-                Debug.Log("Crafting: One Item Good");
+                //Debug.Log("Crafting: One Item Good");
                 if (item.requiredItemTwo)
                 {
                     if (Backpack.instance.countItem(item.requiredItemTwo) >= item.numberItemTwo)
                     {
-                        Debug.Log("Crafting: Two Item Good");
+                        //Debug.Log("Crafting: Two Item Good");
                         // Have enough of both items. Get rid, and add
                         for (int i = 0; i < item.numberItemOne; i++)
                             Backpack.instance.DeleteItem(item.requiredItemOne.itemName);
@@ -50,7 +50,7 @@ public class CraftButton : MyButton {
 
         if (canCraft)
         {
-            Debug.Log("Crafting " + item.itemName);
+            //Debug.Log("Crafting " + item.itemName);
             // Set Craft Item to Discovered
             item.isDiscovered = true;
 

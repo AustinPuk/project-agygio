@@ -88,7 +88,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883389606014524}
-  m_LocalRotation: {x: -0.258819, y: 0, z: 0, w: 0.9659259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -136.2221, y: 34.906, z: -21.039}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -97,7 +97,7 @@ Transform:
   - {fileID: 4326382668435848}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4326382668435848
 Transform:
   m_ObjectHideFlags: 1
@@ -300,7 +300,7 @@ MonoBehaviour:
   itemType: 2
   highlight: {fileID: 23932237814123288}
   grabLocation: {fileID: 4326382668435848}
-  storeRotate: {x: 0, y: 0, z: 0}
+  storeRotate: {x: 90, y: 0, z: 0}
   initialActiveState: 0
   deactivateOnDrop: 0
   isDiscovered: 0
@@ -313,6 +313,7 @@ MonoBehaviour:
   inBackpack: 0
   canStore: 0
   isSelected: 0
+  heldHand: {fileID: 0}
 --- !u!114 &114555639503633736
 MonoBehaviour:
   m_ObjectHideFlags: 1
