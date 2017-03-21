@@ -25,9 +25,16 @@ public class PlayerTeleport : MonoBehaviour {
     private LineRenderer curve;
 
     [SerializeField]
-    LayerMask terrainOnly;
+    private Color yesColor;
+
+    [SerializeField]
+    private Color noColor;
+
+    [SerializeField]
+    LayerMask teleportLayers;
 
     private bool renderCurve = false;
+    private bool destValid;
     private Vector3 dest;
     private RaycastHit destinationHit = new RaycastHit();    
     protected Vector3 fixedForwardBeamForward;    
@@ -36,25 +43,50 @@ public class PlayerTeleport : MonoBehaviour {
     void Start () {
         Ray raycast = new Ray(origin.position, Vector3.down);
         RaycastHit floor;
-        bool ray = Physics.Raycast(raycast, out floor, 1000.0f, terrainOnly);   
+        bool ray = Physics.Raycast(raycast, out floor, 1000.0f, teleportLayers);
         if(ray)
             this.transform.position = floor.point + playerHeight * Vector3.up;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
         // "Shooting Gun Pose" with hand to activate teleport
-        if (hand.gripPressed && !hand.thumbTouch && (!hand.triggerTouched || (hand.triggerTouched && !hand.triggerPressed && renderCurve)))
+
+        if (hand.gripPressed && !hand.thumbTouch && 
+           (!hand.triggerTouched || (hand.triggerTouched && !hand.triggerPressed && renderCurve)))
         {
             Vector3 jointPosition = ForwardBeam();
-            Vector3 downPosition = DownBeam(jointPosition);
-            DisplayCurvedBeam(jointPosition, downPosition);
-            dest = downPosition;
-            renderCurve = true;            
+            if (destValid)
+            {
+                if (DownBeam(jointPosition))
+                {
+                    DisplayCurvedBeam(jointPosition, dest);
+                    destValid = true;
+                    renderCurve = true;
+                    ChangeColor(yesColor);
+                }
+                else
+                {
+                    destValid = false;
+                    renderCurve = false;
+                    curve.enabled = false;
+                    ChangeColor(noColor);
+                }
+            }
+            else
+            {
+                DownBeam(jointPosition);
+                DisplayCurvedBeam(jointPosition, dest);
+                ChangeColor(noColor);
+                renderCurve = true;                
+            }
         }
         else if (hand.gripPressed && !hand.thumbTouch && hand.triggerPressed && renderCurve == true)
-        {            
-            transform.position = new Vector3(dest.x, dest.y + playerHeight, dest.z);
+        {
+            if (destValid)
+                StartCoroutine(FlashStep(new Vector3(dest.x, dest.y + playerHeight, dest.z), 0.1f));
+                //transform.position = new Vector3(dest.x, dest.y + playerHeight, dest.z);
             renderCurve = false;
             curve.enabled = false;
         }
@@ -70,21 +102,14 @@ public class PlayerTeleport : MonoBehaviour {
         float calculatedLength = maxDistance;
         Vector3 useForward = origin.forward;
 
-        fixedForwardBeamForward = origin.forward;
-
-        var actualLength = calculatedLength;
+        fixedForwardBeamForward = origin.forward;        
         Ray pointerRaycast = new Ray(origin.position, useForward);
 
         RaycastHit collidedWith;
-        var hasRayHit = Physics.Raycast(pointerRaycast, out collidedWith, calculatedLength, terrainOnly);
+        var hasRayHit = Physics.Raycast(pointerRaycast, out collidedWith, calculatedLength, teleportLayers);
 
         float contactDistance = 0.0f;
-
-        //reset if beam not hitting or hitting new target
-        if (!hasRayHit || (destinationHit.collider && destinationHit.collider != collidedWith.collider))
-        {
-            contactDistance = 0.0f;
-        }
+        destValid = true;
 
         //check if beam has hit a new target
         if (hasRayHit)
@@ -95,37 +120,35 @@ public class PlayerTeleport : MonoBehaviour {
         //adjust beam length if something is blocking it
         if (hasRayHit && contactDistance < calculatedLength)
         {
-            actualLength = contactDistance;
-        }
+            calculatedLength = contactDistance;
+
+            Debug.Log("Ray Collided With " + collidedWith.collider.name);
+
+            if (collidedWith.collider.gameObject.tag != "Terrain")
+            {
+                destValid = false;
+                ChangeColor(noColor);
+            }
+        }        
         
-        return (pointerRaycast.GetPoint(actualLength) + (Vector3.up));
+        return (pointerRaycast.GetPoint(calculatedLength) + (Vector3.up));
     }
 
-    private Vector3 DownBeam(Vector3 jointPosition)
+    private bool DownBeam(Vector3 jointPosition)
     {
-        Vector3 downPosition = Vector3.zero;
         Ray projectedBeamDownRaycast = new Ray(jointPosition, Vector3.down);
         RaycastHit collidedWith;
 
-        var downRayHit = Physics.Raycast(projectedBeamDownRaycast, out collidedWith, float.PositiveInfinity, terrainOnly);
+        var downRayHit = Physics.Raycast(projectedBeamDownRaycast, out collidedWith, float.PositiveInfinity, teleportLayers);
 
-        if (!downRayHit || (destinationHit.collider && destinationHit.collider != collidedWith.collider))
-        {
-            if (destinationHit.collider != null)
-            {
-                //?
-            }
-            destinationHit = new RaycastHit();
-            downPosition = projectedBeamDownRaycast.GetPoint(0f);
-        }
 
-        if (downRayHit)
-        {
-            downPosition = projectedBeamDownRaycast.GetPoint(collidedWith.distance);
-            // ?
-            destinationHit = collidedWith;
-        }
-        return downPosition;
+        dest = projectedBeamDownRaycast.GetPoint(collidedWith.distance);
+        destinationHit = collidedWith;
+
+        if (downRayHit && collidedWith.collider.tag == "Terrain")       
+            return true;
+        else
+            return false;
     }
 
     private void DisplayCurvedBeam(Vector3 jointPosition, Vector3 downPosition)
@@ -137,9 +160,9 @@ public class PlayerTeleport : MonoBehaviour {
                 downPosition,      
         };
 
-        curve.numPositions = curveDensity;
+        curve.numPositions = curveDensity + 1;
 
-        for (int i = 0; i < curveDensity; i++)
+        for (int i = 0; i <= curveDensity; i++)
         {
             float t = i * (1.0f / curveDensity);
             Vector3 vec1 = Vector3.Lerp(beamPoints[0], beamPoints[1], t);
@@ -148,5 +171,20 @@ public class PlayerTeleport : MonoBehaviour {
         }
 
         curve.enabled = true;
+    }
+
+    private void ChangeColor(Color color)
+    {
+        curve.GetComponent<Renderer>().material.color = color;
+    }
+
+    private IEnumerator FlashStep(Vector3 destination, float time)
+    {
+        for (int i = 0; i <= 20; i++)
+        {
+            transform.position = Vector3.Lerp(transform.position, destination, (i / 20.0f));
+
+            yield return new WaitForSeconds(time / 20.0f);
+        }        
     }
 }
