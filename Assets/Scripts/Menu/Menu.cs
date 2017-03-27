@@ -13,6 +13,10 @@ public class Menu : MonoBehaviour {
     [SerializeField]
     private Transform pouch;
 
+    [SerializeField]
+    private GameObject status;
+
+
     float currentDist;
     private Vector3 originalPos;
 
@@ -28,8 +32,25 @@ public class Menu : MonoBehaviour {
 
     private void Update()
     {
-        if (!hand)
+        /*
+        if (Player.gamePause)
+        {            
+            pouch.gameObject.SetActive(false);
+            GetComponent<Renderer>().enabled = false;
+            status.SetActive(false);
+            CloseMenu();
             return;
+        }
+        else
+        {
+            pouch.gameObject.SetActive(true);
+            status.SetActive(true);
+            GetComponent<Renderer>().enabled = true;            
+        }
+        */
+
+        if (!hand)
+            return;        
 
         if (hand.GetComponent<PlayerHand>().gripPressed && !hand.GetComponent<PlayerHand>().getHeldItem())
         {
@@ -50,13 +71,7 @@ public class Menu : MonoBehaviour {
             else
             {
                 //Debug.Log("Closing Scroll");
-                scroll.SetActive(false);
-                this.transform.localPosition = originalPos;
-                isOpen = false;
-                Backpack.instance.Deselect();
-                Craft.instance.Deselect();
-                Backpack.instance.SetEnable(false);
-                Craft.instance.SetEnable(false);
+                CloseMenu();
                 hand.GetComponent<PlayerHand>().SetHaptic(0.4f, 0.1f);
             }
             hand = null;
@@ -73,5 +88,16 @@ public class Menu : MonoBehaviour {
                     hand = other.gameObject;                
             }                
         }
-    }    
+    }
+
+    private void CloseMenu()
+    {
+        scroll.SetActive(false);
+        this.transform.localPosition = originalPos;
+        isOpen = false;
+        Backpack.instance.Deselect();
+        Craft.instance.Deselect();
+        Backpack.instance.SetEnable(false);
+        Craft.instance.SetEnable(false);
+    }
 }

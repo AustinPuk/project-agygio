@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4884858303726826}
   - component: {fileID: 114895438832261188}
   m_Layer: 0
-  m_Name: Plains
+  m_Name: Impassable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,25 +51,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ab3bfceaf0f464c80da8de01998b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trees:
-  - {fileID: 1319083730505430, guid: 069fe4e56045e264f8fe3746b4f0f348, type: 2}
-  treeRange: {x: 20, y: 60}
-  rocks:
-  - {fileID: 1254170763370394, guid: 7f3355f32e4c0374dab8396aa9c740b0, type: 2}
-  rockRange: {x: 1, y: 10}
-  items:
-  - {fileID: 1626250593003904, guid: 4c68dbbac51bfd64a99c93248eb4bbfd, type: 2}
-  - {fileID: 1021950382395066, guid: a385c596ac3ea29448b73af910639f22, type: 2}
-  - {fileID: 1657735237647884, guid: 80dd306bb1a8f7d4499f2f26a867e649, type: 2}
-  itemRange: {x: 40, y: 60}
+  trees: []
+  treeRange: {x: 0, y: 0}
+  rocks: []
+  rockRange: {x: 0, y: 0}
+  items: []
+  itemRange: {x: 0, y: 0}
   enemies: []
   enemyRange: {x: 0, y: 0}
-  HEIGHT_MAP_POWER: 8
+  HEIGHT_MAP_POWER: 4
   BASE_HEIGHT: 10
-  HEIGHT_RANDOMNESS_SCALE: 20
-  CAN_DIP: 0
+  HEIGHT_RANDOMNESS_SCALE: 50
+  CAN_DIP: 1
   TERRAIN_RESOLUTION: 30
   TERRAIN_SIZE: 100
-  TERRAIN_SMOOTHNESS: 1.2
-  terrainMaterial: {fileID: 2100000, guid: 4353673109153a94a80819fbf16d8b37, type: 2}
+  TERRAIN_SMOOTHNESS: 0.6
+  terrainMaterial: {fileID: 2100000, guid: 387a8e37f7e1aec4a98f1b4387c07b8c, type: 2}
   fixedPoints: []

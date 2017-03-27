@@ -78,4 +78,11 @@ public class Backpack : Window {
         }
         return result;
     }
+    public void Clear()
+    {
+        foreach (Item item in items)
+        {
+            DeleteItem(item.itemName);
+        }
+    }
 }

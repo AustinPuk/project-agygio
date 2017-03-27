@@ -59,18 +59,17 @@ MonoBehaviour:
   rockRange: {x: 0, y: 0}
   items:
   - {fileID: 1893796764076796, guid: 510121535bef4e543b078a543f9d8dfb, type: 2}
-  - {fileID: 1656271878063518, guid: 9c5072029251a2e4f8934f24b0ad3e11, type: 2}
-  itemRange: {x: 10, y: 50}
+  itemRange: {x: 10, y: 30}
   enemies:
   - {fileID: 1843993838453764, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
   - {fileID: 1313463301408540, guid: 8b510786eaee7524589acf4875101705, type: 2}
   enemyRange: {x: 5, y: 10}
   HEIGHT_MAP_POWER: 8
-  BASE_HEIGHT: 10
-  HEIGHT_RANDOMNESS_SCALE: 40
+  BASE_HEIGHT: 20
+  HEIGHT_RANDOMNESS_SCALE: 50
   CAN_DIP: 0
   TERRAIN_RESOLUTION: 30
   TERRAIN_SIZE: 100
-  TERRAIN_SMOOTHNESS: 0.8
+  TERRAIN_SMOOTHNESS: 1.2
   terrainMaterial: {fileID: 2100000, guid: 92c358d839d925d4cb1f436facfd6337, type: 2}
   fixedPoints: []

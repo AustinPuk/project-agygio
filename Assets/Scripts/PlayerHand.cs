@@ -33,6 +33,9 @@ public class PlayerHand : MonoBehaviour {
     [SerializeField]
     private Transform windowParent;
 
+    [SerializeField]
+    private GameObject menu;
+
     LayerMask windowOnly;
     LayerMask buttonsOnly;
 
@@ -65,7 +68,7 @@ public class PlayerHand : MonoBehaviour {
         this.transform.localRotation = linkedHand.localRotation;        
 
         // Menu Pointer for Interactions
-        if (Menu.isOpen)
+        if (Menu.isOpen || Player.gamePause)
             WindowPointer();
         else
             pointer.enabled = false;

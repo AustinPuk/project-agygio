@@ -79,6 +79,9 @@ public class Enemy : MonoBehaviour
 		
 	void Update ()
     {
+        if (Player.gamePause)
+            return;
+
         if (!CheckActive())
             return;
 

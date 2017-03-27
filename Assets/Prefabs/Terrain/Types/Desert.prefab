@@ -58,7 +58,6 @@ MonoBehaviour:
   rockRange: {x: 50, y: 80}
   items:
   - {fileID: 1893796764076796, guid: 510121535bef4e543b078a543f9d8dfb, type: 2}
-  - {fileID: 1656271878063518, guid: 9c5072029251a2e4f8934f24b0ad3e11, type: 2}
   itemRange: {x: 10, y: 40}
   enemies:
   - {fileID: 1843993838453764, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}

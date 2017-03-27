@@ -14,6 +14,9 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject damageIndicator;
 
+    [SerializeField]
+    private GameObject fadeScreen;
+
     [Tooltip("Rate that hunger reduces per MINUTE")]
     [SerializeField]
     private float hungerRate;
@@ -21,6 +24,12 @@ public class Player : MonoBehaviour {
     [Tooltip("Rate that health restores over time. Actual rate changes proportional to hunger")]
     [SerializeField]
     private float baseHealthRegen;
+
+    [SerializeField]
+    private Transform respawnLoc;
+            
+    static public bool gamePause;
+    static public bool canMove;
 
     public float health;
     public float hunger;
@@ -35,14 +44,19 @@ public class Player : MonoBehaviour {
 	void Start () {
         health = maxHealth;
         hunger = maxHunger;
+
+        gamePause = true;
+        canMove = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        Regen(Time.deltaTime);
-        CheckDeath();
-		        
+        if (!gamePause)
+        {
+            Regen(Time.deltaTime);
+            CheckDeath();
+        }        		        
 	}
 
     /**************************** Player Updates ***********************************/
@@ -66,7 +80,13 @@ public class Player : MonoBehaviour {
     {
         //Debug.Log("Player Dies");
         // Dies
-        // Some sort of method for transitioning to a main menu / title screen / DARKNESS
+        // Darkness, then return to main menu or show score
+
+        StartCoroutine(FadeOut(2.0f, true));
+
+        // Set Pause Boolean for game
+        Backpack.instance.Clear();
+        gamePause = true;
     }
 
     IEnumerator KnockBack(Vector3 direction)
@@ -81,6 +101,47 @@ public class Player : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         damageIndicator.SetActive(false);
         yield return null;
+    }
+    
+    IEnumerator FadeOut(float time, bool toHaven)
+    {
+        canMove = false;
+        fadeScreen.SetActive(true);
+        Material mat = fadeScreen.GetComponent<Renderer>().material;
+        Color color = mat.color;
+
+        for (float i = 0; i <= 100.0f; i++) 
+        {
+            color.a = i / 100.0f;
+            mat.color = color;
+            yield return new WaitForSeconds(time / 100.0f);   
+        }
+        if (toHaven)
+            Teleport(respawnLoc.position, false);
+        else
+            Teleport(new Vector3(0, 0, 0), true);
+
+        canMove = true;
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(FadeIn(time));
+
+        yield return null;
+    }    
+
+    IEnumerator FadeIn(float time)
+    {
+        fadeScreen.SetActive(true);
+        Material mat = fadeScreen.GetComponent<Renderer>().material;
+        Color color = mat.color;
+
+        for (float i = 100.0f; i >= 0; i--)
+        {
+            color.a = i / 100.0f;
+            mat.color = color;
+            yield return new WaitForSeconds(time / 100.0f);
+        }
+
+        fadeScreen.SetActive(false);
     }
 
 
@@ -102,16 +163,34 @@ public class Player : MonoBehaviour {
 
         dir.y = 0.0f;
         StartCoroutine(KnockBack(dir));
+         
+    }        
 
-        // TODO: take type into account, and possibly even armor. 
-    }    
+    public void StartGame()
+    {
+        gamePause = false;
+        health = maxHealth;
+        hunger = maxHunger;
+        StartCoroutine(FadeOut(1.0f, false));
+    }
 
     /******************************* Helper Functions **********************************/
 
     private void FixHeight() 
     {
+        float playerHeight = 1.3f; // TODO: Make this variable better
         float x = transform.position.x;
         float z = transform.position.z;
-        transform.position = new Vector3(x, WorldGenerator.instance.HeightLookup(x, z), z);
+        transform.position = new Vector3(x, WorldGenerator.instance.HeightLookup(x, z) + playerHeight, z);
+    }
+
+    private void Teleport(Vector3 loc, bool fixHeight)
+    {
+        transform.position = loc;
+        if (fixHeight)
+        {
+            FixHeight();
+        }
+
     }
 }

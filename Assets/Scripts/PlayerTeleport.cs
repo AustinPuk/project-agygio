@@ -50,6 +50,9 @@ public class PlayerTeleport : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (!Player.canMove)
+            return;
+
         // "Shooting Gun Pose" with hand to activate teleport
 
         if (hand.padPressed && !hand.triggerPressed)

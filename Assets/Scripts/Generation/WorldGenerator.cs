@@ -36,6 +36,8 @@ public class WorldGenerator : MonoBehaviour
     public bool isDay;
     private float nightTimer;
 
+    public bool resetWorld;
+
     private void Awake()
     {
         if (!instance)
@@ -59,6 +61,13 @@ public class WorldGenerator : MonoBehaviour
 
     private void Update()
     {
+        if (resetWorld)
+        {
+            DeleteWorld();
+            GenerateWorld();
+            resetWorld = false;
+        }
+
         if (isDay)
         {
             sun.RotateAround(new Vector3(0.0f, 0.0f, 0.0f), Vector3.forward, rotationRate * Time.deltaTime);
@@ -93,11 +102,22 @@ public class WorldGenerator : MonoBehaviour
 
     private void GenerateWorld()
     {
-        GenerateTerrain();
+        GenerateTerrain();        
         GenerateTrees();
         GenerateRocks();
         GenerateItems();
         GenerateEnemies();
+    }
+
+    private void DeleteWorld()
+    {
+        foreach (TerrainGenerator terrain in terrains)
+        {
+            foreach (Transform child in terrain.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 
     public float HeightLookup(float x, float z)

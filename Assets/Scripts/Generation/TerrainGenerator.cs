@@ -32,7 +32,10 @@ public class TerrainGenerator : MonoBehaviour {
         int HEIGHT_MAP_SIZE = (int)Mathf.Pow(2, type.HEIGHT_MAP_POWER) + 1;
         int VILLAGE_DIAMETER = (int)(0.9f * HEIGHT_MAP_SIZE);
 
-        heightMap = new List<List<float>>();
+        if (heightMap == null)
+            heightMap = new List<List<float>>();
+        else
+            heightMap.Clear();
 
         GenerateHeightMap(HEIGHT_MAP_SIZE, type.BASE_HEIGHT, VILLAGE_DIAMETER, type.HEIGHT_RANDOMNESS_SCALE, true, type.TERRAIN_SMOOTHNESS);
         GenerateMesh(type.TERRAIN_SIZE, type.TERRAIN_RESOLUTION);
@@ -43,7 +46,10 @@ public class TerrainGenerator : MonoBehaviour {
 
     private void GenerateMesh(float size, int numPoints)
     {
-        GetComponent<MeshFilter>().mesh = mesh = new Mesh();
+        if (mesh == null)
+            GetComponent<MeshFilter>().mesh = mesh = new Mesh();
+        else
+            mesh.Clear();
         mesh.name = "Procedural Terrain";
 
         //Terain is size x size
@@ -424,5 +430,10 @@ public class TerrainGenerator : MonoBehaviour {
     {
         foreach (Vector3 point in points)            
             AddFixedPoint(point);
+    }
+
+    public void ClearFixedPoints()
+    {
+        fixedPoints.Clear();
     }
 }

@@ -170,6 +170,8 @@ public abstract class Window : MonoBehaviour
             if (item)
                 item.transform.SetParent(hidden.transform);
         }
+
+        Deselect();
     }
 
     public void SetEnable(bool b)
