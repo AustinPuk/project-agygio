@@ -26,7 +26,7 @@ public class RangedWeapon : Item
         proj.transform.rotation = spawnLoc.rotation * proj.transform.rotation;
         proj.GetComponent<Projectile>().Fire(baseDamage, baseEffect, spawnLoc.forward, true);
         //Debug.DrawRay(spawnLoc.position, spawnLoc.forward, Color.red, 100.0f);
-        heldHand.SetHaptic(0.5f, 0.7f, 0.07f);
+        heldHand.SetHaptic(0.8f, 0.1f);
     }
 
     public override void OnHold()

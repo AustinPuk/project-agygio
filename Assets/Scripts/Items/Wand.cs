@@ -52,7 +52,7 @@ public class Wand : Item
         proj.transform.rotation = tipLoc.rotation * proj.transform.rotation;
         proj.GetComponent<Projectile>().Fire(baseDamage, baseEffect, 
             Vector3.Lerp(Vector3.Normalize(tipVelocity), tipLoc.forward, 0.5f) * Vector3.Magnitude(tipVelocity), true, true);
-        heldHand.SetHaptic(0.8f, 0.8f, 0.1f);
+        heldHand.SetHaptic(0.8f, 0.1f);
     }
 
     public override void OnPress()
@@ -69,17 +69,17 @@ public class Wand : Item
 
         if (chargeTimer > 0.0f)
         {
-            heldHand.SetHaptic(0.6f, 0.3f);
+            heldHand.SetHaptic(0.4f);
             chargeTimer -= Time.deltaTime;
             if (chargeTimer < chargeMax - chargeMin && chargeTimer > 0.0f)
             {
-                heldHand.SetHaptic(0.6f, 0.5f);
+                heldHand.SetHaptic(0.9f);
                 chargedParticles.SetActive(true);
             }
         }
         else
         {
-            heldHand.SetHaptic(0.0f, 0.0f);
+            heldHand.SetHaptic(0.0f);
             startParticles.SetActive(false);
             chargedParticles.SetActive(false);
         }
@@ -92,10 +92,10 @@ public class Wand : Item
             if (Vector3.Magnitude(tipVelocity) > minVelocity)
                 Shoot();
             else
-                heldHand.SetHaptic(0.0f, 0.0f);
+                heldHand.SetHaptic(0.0f);
         }
         else
-            heldHand.SetHaptic(0.0f, 0.0f);
+            heldHand.SetHaptic(0.0f);
 
         startParticles.SetActive(false);
         chargedParticles.SetActive(false);

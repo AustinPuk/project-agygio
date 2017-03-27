@@ -22,6 +22,9 @@ public class WorldGenerator : MonoBehaviour
     private float nightLength;
 
     [SerializeField]
+    float itemOffest;
+
+    [SerializeField]
     int seed;
 
     //[SerializeField]
@@ -305,7 +308,7 @@ public class WorldGenerator : MonoBehaviour
 
                 float x = Random.Range(min_x, max_x);
                 float z = Random.Range(min_z, max_z);
-                float y = terrain.HeightLookup(x, z);
+                float y = terrain.HeightLookup(x, z) + itemOffest;
 
                 newItem.transform.position = new Vector3(x + terrain.transform.position.x, y,
                                                          z + terrain.transform.position.z);

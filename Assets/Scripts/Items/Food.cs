@@ -52,7 +52,7 @@ public class Food : Item
                 particles.Play();
 
                 if(heldHand)
-                    heldHand.SetHaptic(0.4f, 0.4f);
+                    heldHand.SetHaptic(0.6f);
             }
             if (timer > 0.0f)
             {
@@ -61,11 +61,13 @@ public class Food : Item
             else
             {
                 Debug.Log("Food has been eaten");
+
+                if (heldHand)
+                    heldHand.SetHaptic(0.0f);
+
                 OnDrop(); // Drop Item first before destroying
                 Player.instance.Eat(amount);
-                if(heldHand)
-                    heldHand.SetHaptic(0.0f, 0.0f);
-                // Play Eat Audio
+
                 Destroy(this.gameObject);
             }            
         }
@@ -81,7 +83,7 @@ public class Food : Item
             isEating = false;
             timer = eatTime;
             if(heldHand)
-                heldHand.SetHaptic(0.0f, 0.0f);
+                heldHand.SetHaptic(0.0f);
 
             // Stop Particle System
             particles.Stop();

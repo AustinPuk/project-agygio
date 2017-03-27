@@ -27,11 +27,11 @@ public class MeleeWeapon : Item {
             if (Vector3.Magnitude(currentVelocity) > minimumVelocity)
             {
                 other.gameObject.GetComponent<Enemy>().TakeDamage(baseDamage, baseEffect);
-                heldHand.SetHaptic(0.6f, 0.8f, 0.06f);
+                heldHand.SetHaptic(0.8f, 0.1f);
             }
             else
             {
-                heldHand.SetHaptic(0.2f, 0.3f, 0.04f);
+                heldHand.SetHaptic(0.3f, 0.04f);
             }
         }
     }

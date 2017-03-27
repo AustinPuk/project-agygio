@@ -70,13 +70,13 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator KnockBack(Vector3 direction)
-    {
+    {        
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().AddForce(direction * 300.0f);
         damageIndicator.SetActive(true);
         yield return new WaitForSeconds(0.09f);
         GetComponent<Rigidbody>().isKinematic = true;
-        yield return new WaitForSeconds(0.1f);
+        FixHeight();
         damageIndicator.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         damageIndicator.SetActive(false);
@@ -97,12 +97,21 @@ public class Player : MonoBehaviour {
         //Debug.Log("Player: Take Damage");
         health -= amount;
 
-        VRControls.instance.rightHand.SetHaptic(1.0f, 1.0f, 0.2f);
-        VRControls.instance.leftHand.SetHaptic(1.0f, 1.0f, 0.2f);
+        VRControls.instance.rightHand.SetHaptic(1.0f, 0.2f);
+        VRControls.instance.leftHand.SetHaptic(1.0f, 0.2f);
 
         dir.y = 0.0f;
         StartCoroutine(KnockBack(dir));
 
         // TODO: take type into account, and possibly even armor. 
+    }    
+
+    /******************************* Helper Functions **********************************/
+
+    private void FixHeight() 
+    {
+        float x = transform.position.x;
+        float z = transform.position.z;
+        transform.position = new Vector3(x, WorldGenerator.instance.HeightLookup(x, z), z);
     }
 }

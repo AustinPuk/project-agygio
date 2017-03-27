@@ -34,11 +34,11 @@ public class EnvironmentObject : MonoBehaviour {
                 {
                     health -= 1 * vel;
                     CheckHealth();
-                    other.gameObject.GetComponent<Item>().heldHand.SetHaptic(0.6f, 0.8f, 0.06f); // TODO : Change Protection Level Back
+                    other.gameObject.GetComponent<Item>().heldHand.SetHaptic(0.8f, 0.1f); // TODO : Change Protection Level Back
                 }
                 else
                 {
-                    other.gameObject.GetComponent<Item>().heldHand.SetHaptic(0.3f, 0.3f, 0.04f);
+                    other.gameObject.GetComponent<Item>().heldHand.SetHaptic(0.2f, 0.1f);
                 }
             }
         }

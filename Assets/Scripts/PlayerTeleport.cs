@@ -52,8 +52,7 @@ public class PlayerTeleport : MonoBehaviour {
 
         // "Shooting Gun Pose" with hand to activate teleport
 
-        if (hand.gripPressed && !hand.thumbTouch && 
-           (!hand.triggerTouched || (hand.triggerTouched && !hand.triggerPressed && renderCurve)))
+        if (hand.padPressed && !hand.triggerPressed)
         {
             Vector3 jointPosition = ForwardBeam();
             if (destValid)
@@ -81,7 +80,7 @@ public class PlayerTeleport : MonoBehaviour {
                 renderCurve = true;                
             }
         }
-        else if (hand.gripPressed && !hand.thumbTouch && hand.triggerPressed && renderCurve == true)
+        else if (hand.padPressed && hand.triggerPressed && renderCurve == true)
         {
             if (destValid)
                 StartCoroutine(FlashStep(new Vector3(dest.x, dest.y + playerHeight, dest.z), 0.1f));

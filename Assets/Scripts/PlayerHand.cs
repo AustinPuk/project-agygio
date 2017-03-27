@@ -7,18 +7,26 @@ public class PlayerHand : MonoBehaviour {
     [SerializeField]
     private LineRenderer pointer;
 
+    [SerializeField]
+    private Transform linkedHand;
+
     public bool isRightHand;
 
     public bool triggerPressed;
-    public bool triggerTouched;
     public bool gripPressed;
-    public bool thumbTouch;
+    public bool padPressed;
+    public int controllerIndex;
 
     private Item heldItem;
     private bool holdingTrigger; // Prevents multiple inputs when holding down button
 
     public Vector3 velocity;
-    private Vector3 lastPos; 
+    private Vector3 lastPos;
+    
+    private ushort hapticStrength;
+    private IEnumerator hapticRoutine;
+
+    private bool gripRefreshed;
 
     // Hacky window moving
     private GameObject holdWindow;    
@@ -32,12 +40,12 @@ public class PlayerHand : MonoBehaviour {
     {
         windowOnly = 1 << LayerMask.NameToLayer("Window");
         buttonsOnly = 1 << LayerMask.NameToLayer("Buttons");
-        lastPos = transform.position;        
+        lastPos = transform.position;
     }    
         
     
     private void Update ()
-    {
+    {        
         // Calculates velocity for throwing and stuff
         velocity = (transform.position - lastPos) / Time.deltaTime;
         lastPos = transform.position;
@@ -47,20 +55,14 @@ public class PlayerHand : MonoBehaviour {
             GetComponent<Renderer>().enabled = false;
         else
             GetComponent<Renderer>().enabled = true;
-                
+
+        // Prevents multiple grip presses
+        if (!gripPressed && !gripRefreshed)
+            gripRefreshed = true;        
+
         // Updates Controller Position/Rotation
-        if (isRightHand)
-        {
-            this.transform.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
-            this.transform.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
-            //this.transform.localPosition += this.transform.forward * sphereOffset;
-        }
-        else
-        {
-            this.transform.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
-            this.transform.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
-            //this.transform.localPosition += this.transform.forward * sphereOffset;
-        }
+        this.transform.localPosition = linkedHand.localPosition;
+        this.transform.localRotation = linkedHand.localRotation;        
 
         // Menu Pointer for Interactions
         if (Menu.isOpen)
@@ -68,38 +70,31 @@ public class PlayerHand : MonoBehaviour {
         else
             pointer.enabled = false;
 
-
         // Checks if trigger is being held down (must be after windowPoitner)
         if (triggerPressed && !holdingTrigger)
             holdingTrigger = true;
         if (holdingTrigger && !triggerPressed)
-            holdingTrigger = false;
-
+            holdingTrigger = false;        
 
         // For Dropping an Object
-
-        if (!gripPressed && !thumbTouch && !triggerTouched)
-        {
-            if (heldItem)
-            {                
-                dropItem();
-            }
-        }
+        if (gripPressed && heldItem && gripRefreshed)
+            dropItem();            
+           
 	}
 
     private void OnTriggerStay(Collider collision)
     {
         // For Grabbing an Object
 
-        // TODO: Be able to detect "pressing" action, rather than checking if it's held down.
-
         if (heldItem)
             return;
 
         if (collision.gameObject.tag == "GrabBox" || collision.gameObject.tag == "Handle")
-            SetHaptic(0.2f, 0.2f);
+            SetHaptic(0.2f);
+        if (collision.gameObject.tag == "Handle" && holdWindow)
+            SetHaptic(0.4f);
 
-        if (gripPressed)
+        if (gripPressed && gripRefreshed)
         {
             if (collision.gameObject.tag == "GrabBox")
             {                
@@ -107,7 +102,6 @@ public class PlayerHand : MonoBehaviour {
             }
             if (collision.gameObject.tag == "Handle" && !holdWindow)
             {                
-                // Ugly Handle Code 
                 holdWindow = collision.transform.parent.parent.gameObject;                 
                 holdWindow.transform.SetParent(this.transform);
             }
@@ -115,7 +109,6 @@ public class PlayerHand : MonoBehaviour {
 
         if(!gripPressed && holdWindow)
         {
-            SetHaptic(0.0f, 0.0f);
             holdWindow.transform.SetParent(windowParent);
             holdWindow = null;
         }
@@ -124,7 +117,7 @@ public class PlayerHand : MonoBehaviour {
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "GrabBox" || other.gameObject.tag == "Handle")
-            SetHaptic(0.0f, 0.0f);
+            SetHaptic(0.0f);
     }
 
     private void WindowPointer()
@@ -148,7 +141,7 @@ public class PlayerHand : MonoBehaviour {
                     if (hit.collider.gameObject.GetComponent<MyButton>())
                     {
                         //Debug.Log("Pressing Button " + hit.collider.gameObject.name);
-                        SetHaptic(0.4f, 0.4f, 0.1f);
+                        SetHaptic(0.5f, 0.1f);
                         hit.collider.gameObject.GetComponent<MyButton>().OnClick(this);                        
                     }
                 }
@@ -165,42 +158,70 @@ public class PlayerHand : MonoBehaviour {
     {
         if (!item.isHeld)
         {
-            SetHaptic(0.5f, 0.5f, 0.1f);
+            SetHaptic(0.5f, 0.1f);
             if(item.OnGrab(this))
                 heldItem = item;
+            gripRefreshed = false;
         }        
     }
 
     public void dropItem()
     {
-        SetHaptic(0.2f, 0.4f, 0.1f);
+        SetHaptic(0.5f, 0.1f);
         heldItem.OnDrop();
         heldItem = null;
+        gripRefreshed = false;
     }
 
     public Item getHeldItem()
     {
         return heldItem;
     }
-        
-    public void SetHaptic(float frequency, float amplitude)
-    {        
-        if (isRightHand)
-            OVRInput.SetControllerVibration(frequency, amplitude, OVRInput.Controller.RTouch);
+
+    /******************************** Haptic Functions ************************************/
+ 
+    public void SetHaptic(float strength) 
+    {
+        // Assume strength is value between 0 - 1
+        if (strength > 0)
+        {
+            hapticStrength = (ushort)Mathf.Lerp(0, 3999, strength);
+            if (hapticRoutine == null)
+            {
+                hapticRoutine = Haptic();
+                StartCoroutine(hapticRoutine);
+            }
+        }
         else
-            OVRInput.SetControllerVibration(frequency, amplitude, OVRInput.Controller.LTouch);
+        {
+            if (hapticRoutine != null)
+            {
+                StopCoroutine(hapticRoutine);
+                hapticRoutine = null;
+            }            
+        }            
     }
 
-    public void SetHaptic(float frequency, float amplitude, float time)
+    public void SetHaptic(float strength, float time)
     {
-        StartCoroutine(TimedHaptic(frequency, amplitude, time));
+        // Assume strength is value between 0 - 1
+        StartCoroutine(TimedHaptic(strength, time));
+        return;        
     }
-
-    private IEnumerator TimedHaptic(float frequency, float amplitude, float time)
+    
+    private IEnumerator TimedHaptic(float strength, float time)
     {
-        SetHaptic(frequency, amplitude);
+        SetHaptic(strength);
         yield return new WaitForSeconds(time);
-        SetHaptic(0.0f, 0.0f);
+        SetHaptic(0);
         yield return null;
     }
+
+    private IEnumerator Haptic() {
+        while(true)
+        {            
+            SteamVR_Controller.Input(controllerIndex).TriggerHapticPulse(hapticStrength);
+            yield return new WaitForSeconds(0.03f);
+        }        
+   }
 }
