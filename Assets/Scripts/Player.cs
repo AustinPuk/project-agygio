@@ -110,8 +110,9 @@ public class Player : MonoBehaviour {
 
     private void FixHeight() 
     {
+        float playerHeight = 1.3f; // TODO: Make this variable better
         float x = transform.position.x;
-        float z = transform.position.z;
-        transform.position = new Vector3(x, WorldGenerator.instance.HeightLookup(x, z), z);
+        float z = transform.position.z;        
+        transform.position = new Vector3(x, WorldGenerator.instance.HeightLookup(x, z) + playerHeight, z);
     }
 }

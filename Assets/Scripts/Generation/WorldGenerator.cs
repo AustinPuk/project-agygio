@@ -94,6 +94,7 @@ public class WorldGenerator : MonoBehaviour
     private void GenerateWorld()
     {
         GenerateTerrain();
+        GenerateRegions();
         GenerateTrees();
         GenerateRocks();
         GenerateItems();
@@ -127,7 +128,7 @@ public class WorldGenerator : MonoBehaviour
 
         //Debug.Log("World Height: " + x + " " + z + " " + closestTerrain);
         return closestTerrain.HeightLookup(x - closestTerrain.transform.position.x, z - closestTerrain.transform.position.z);
-    }
+    }    
 
     /*************** Generation Functions *********************/
 
@@ -218,6 +219,52 @@ public class WorldGenerator : MonoBehaviour
         }
         terrains[9].AddFixedPoints(fixedPoints);
         terrains[9].GenerateTerrain();
+    }
+
+    private void GenerateRegions()
+    {
+        float offset = Random.Range(0, 2000);
+
+        foreach (TerrainGenerator terrain in terrains)
+        {            
+            // For all coordinates
+            float size = terrain.GetTerrainType().TERRAIN_SIZE;
+
+            Texture2D tex = new Texture2D((int) size, (int) size);
+
+            float mid = size / 2.0f;
+            for (float x = -mid; x < mid; x++)
+            {
+                for (float z = -mid; z < mid; z++)
+                {
+                    float height = terrain.HeightLookup(x, z);
+                    float newX = ((x + terrain.transform.position.x + size * 1.5f) / (size * 3.0f)) + offset;
+                    float newZ = ((z + terrain.transform.position.z + size * 1.5f) / (size * 3.0f)) + offset;
+                    float moisture = Mathf.PerlinNoise(newX, newZ);
+
+                    if (height > 30.0f)
+                    {
+                        if (moisture > 0.6f)
+                            tex.SetPixel((int)(x + mid), (int)(z + mid), Color.blue);
+                        else
+                            tex.SetPixel((int)(x + mid), (int)(z + mid), Color.grey);
+                    }
+                    else
+                    {
+                        if (moisture > 0.6f)
+                            tex.SetPixel((int)(x + mid), (int)(z + mid), Color.magenta);
+                        else if (moisture > 0.3f)
+                            tex.SetPixel((int)(x + mid), (int)(z + mid), Color.green);
+                        else
+                            tex.SetPixel((int)(x + mid), (int)(z + mid), Color.yellow);
+                    }                    
+                }
+            }
+            
+            tex.Apply();
+            tex.wrapMode = TextureWrapMode.Clamp;
+            terrain.AttachTexture(tex);
+        }
     }
 
     private void GenerateTrees()
@@ -352,6 +399,5 @@ public class WorldGenerator : MonoBehaviour
                 newEnemy.transform.SetParent(terrain.transform);
             }
         }
-
     }
 }

@@ -14,7 +14,7 @@ public class TerrainGenerator : MonoBehaviour {
     private Mesh mesh;
     private TerrainType type;
 
-    List<List<float>> heightMap;
+    List<List<float>> heightMap;    
     private float smoothness;
 
     public void Initialize()
@@ -38,8 +38,15 @@ public class TerrainGenerator : MonoBehaviour {
         GenerateMesh(type.TERRAIN_SIZE, type.TERRAIN_RESOLUTION);
 
         GetComponent<MeshCollider>().sharedMesh = mesh;
-        GetComponent<Renderer>().material = type.terrainMaterial;
+        //GetComponent<Renderer>().material = type.terrainMaterial;
     }
+
+    public void AttachTexture(Texture2D tex)
+    {
+        GetComponent<Renderer>().material.mainTexture = tex;
+    }
+
+    /****************************** Terrain Generation ******************************/
 
     private void GenerateMesh(float size, int numPoints)
     {
@@ -50,6 +57,7 @@ public class TerrainGenerator : MonoBehaviour {
 
         List<Vector3> vertices = new List<Vector3>();
         List<Vector3> normals = new List<Vector3>();
+        List<Vector2> texcoords = new List<Vector2>();
         List<int> indices = new List<int>();
 
         bool normals_up = false;    
@@ -69,8 +77,8 @@ public class TerrainGenerator : MonoBehaviour {
         {
             for (float z = min_z; z <= (max_z - step_size); z += step_size)
             {
-                float h1 = HeightLookup(x, z);
 
+                float h1 = HeightLookup(x, z);
                 float h2 = HeightLookup(x + step_size, z);
                 float h3 = HeightLookup(x, z + step_size);
                 float h4 = HeightLookup(x + step_size, z + step_size);
@@ -86,7 +94,7 @@ public class TerrainGenerator : MonoBehaviour {
                 vertices.Add(v2);
                 vertices.Add(v2);
                 vertices.Add(v3);
-                vertices.Add(v4);
+                vertices.Add(v4);                
 
                 if (normals_up)
                 {
@@ -114,16 +122,28 @@ public class TerrainGenerator : MonoBehaviour {
                     normals.Add(n5);
                     normals.Add(n6);
                 }
+
+                // Texture Coordinates (UVs)
+                texcoords.Add(new Vector2((v1.x + middle) / size, (v1.z + middle) / size));
+                texcoords.Add(new Vector2((v3.x + middle) / size, (v3.z + middle) / size));
+                texcoords.Add(new Vector2((v2.x + middle) / size, (v2.z + middle) / size));
+                texcoords.Add(new Vector2((v2.x + middle) / size, (v2.z + middle) / size));
+                texcoords.Add(new Vector2((v3.x + middle) / size, (v3.z + middle) / size));
+                texcoords.Add(new Vector2((v4.x + middle) / size, (v4.z + middle) / size));
             }
         }
 
         //Indices are just in order to make it easier
         for (int i = 0; i < vertices.Count; i++)
+        {
             indices.Add(i);
+        }
+            
 
         mesh.vertices = vertices.ToArray();
         mesh.normals = normals.ToArray();
         mesh.triangles = indices.ToArray();
+        mesh.uv = texcoords.ToArray();
 
         /*
         if (saveFile)
@@ -224,9 +244,9 @@ public class TerrainGenerator : MonoBehaviour {
         }
         */
 
-    //Diamond Square Algorithm
+        //Diamond Square Algorithm
 
-    int stepsize = size - 1;
+        int stepsize = size - 1;
 
         //Recursively creates height map
         DiamondSquare(stepsize, size, scale);
@@ -358,6 +378,7 @@ public class TerrainGenerator : MonoBehaviour {
     // So bounds are - size / 2.0f -> size / 2.0f
     public float HeightLookup(float x, float y, float size = 0, bool atCenter = true)
     {
+        
         float length = (size == 0) ? type.TERRAIN_SIZE : size;
         float mid = length / 2.0f;
 
@@ -368,6 +389,8 @@ public class TerrainGenerator : MonoBehaviour {
             // (0, 0) is at center of terrain
             x = ((x + mid) / length) * ((float)heightMap.Count - 1.0f);
             y = ((y + mid) / length) * ((float)heightMap.Count - 1.0f);
+            // Debug.Log("Test: " + Mathf.PerlinNoise((x + mid) / length, y / length));
+            //return Mathf.PerlinNoise((x + mid) / length, y / length) * type.HEIGHT_RANDOMNESS_SCALE;
 
         }
         else
@@ -375,6 +398,7 @@ public class TerrainGenerator : MonoBehaviour {
             // (0, 0) is at lowest corner of terrain
             x = ((x) / length) * ((float)heightMap.Count - 1.0f);
             y = ((y) / length) * ((float)heightMap.Count - 1.0f);
+            //return Mathf.PerlinNoise(x / length, y / length) * type.HEIGHT_RANDOMNESS_SCALE;
         }                
 
         int x0 = (int)Mathf.Floor(x);
