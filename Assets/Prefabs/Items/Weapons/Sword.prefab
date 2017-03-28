@@ -309,17 +309,19 @@ MonoBehaviour:
   craftMenuItem: 0
   requiredItemOne: {fileID: 114088634048844264, guid: 4039788c77ab34b4d940d060975e4757,
     type: 2}
-  numberItemOne: 2
+  numberItemOne: 5
   requiredItemTwo: {fileID: 114396111283057518, guid: 9c5072029251a2e4f8934f24b0ad3e11,
     type: 2}
-  numberItemTwo: 1
+  numberItemTwo: 2
   isHeld: 0
   inBackpack: 0
   canStore: 0
   isSelected: 0
+  heldHand: {fileID: 0}
   minimumVelocity: 2
   baseDamage: 10
   baseEffect: 0
+  currentVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &114319054214619512
 MonoBehaviour:
   m_ObjectHideFlags: 1

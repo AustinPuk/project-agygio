@@ -33,7 +33,7 @@ public class Campfire : MonoBehaviour
         TurnFireOff();
 
         float y = WorldGenerator.instance.HeightLookup(transform.position.x, transform.position.z);
-        transform.position = new Vector3(transform.position.x, y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, y + 0.1f, transform.position.z);
     }
 
     private void OnTriggerEnter(Collider other)

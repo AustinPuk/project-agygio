@@ -109,7 +109,7 @@ public class Player : MonoBehaviour {
         StartCoroutine(FadeOut(2.0f, true));
 
         // Set Pause Boolean for game
-        Backpack.instance.Clear();
+        Backpack.instance.Clear();       
         gamePause = true;
     }
 
@@ -192,6 +192,7 @@ public class Player : MonoBehaviour {
 
     public void StartGame()
     {
+        GameManager.instance.ResetGame();
         gamePause = false;
         health = maxHealth;
         hunger = maxHunger;

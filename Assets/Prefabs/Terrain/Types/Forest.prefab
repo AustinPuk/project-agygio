@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trees:
   - {fileID: 1319083730505430, guid: 069fe4e56045e264f8fe3746b4f0f348, type: 2}
-  treeRange: {x: 200, y: 300}
+  treeRange: {x: 100, y: 120}
   rocks:
   - {fileID: 1254170763370394, guid: 7f3355f32e4c0374dab8396aa9c740b0, type: 2}
   rockRange: {x: 5, y: 20}
@@ -64,7 +64,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 1843993838453764, guid: 6d4a13062de08444bb2ae1bb0d1172f7, type: 2}
   - {fileID: 1313463301408540, guid: 8b510786eaee7524589acf4875101705, type: 2}
-  enemyRange: {x: 5, y: 10}
+  enemyRange: {x: 8, y: 10}
   HEIGHT_MAP_POWER: 8
   BASE_HEIGHT: 10
   HEIGHT_RANDOMNESS_SCALE: 20

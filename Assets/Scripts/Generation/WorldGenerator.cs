@@ -10,19 +10,11 @@ public class WorldGenerator : MonoBehaviour
     // Also delegates terrain generation so that fixed points match
 
     [SerializeField]
-    private Transform sun;
-
-    [SerializeField]
-    private Transform moon;
-
-    [SerializeField]
-    private float rotationRate;
-
-    [SerializeField]
-    private float nightLength;
+    private Transform enemyGroup;    
 
     [SerializeField]
     float itemOffest;
+
 
     [SerializeField]
     int seed;
@@ -34,10 +26,7 @@ public class WorldGenerator : MonoBehaviour
     List<TerrainGenerator> terrains;
 
     [SerializeField]
-    LayerMask terrainLayer;
-
-    public bool isDay;
-    private float nightTimer;
+    LayerMask terrainLayer;    
 
     public bool resetWorld;
 
@@ -49,11 +38,7 @@ public class WorldGenerator : MonoBehaviour
         if (seed != 0)
             Random.InitState(seed);
 
-        GenerateWorld();
-
-        isDay = true;
-        sun.gameObject.SetActive(true);
-        moon.gameObject.SetActive(false);
+        GenerateWorld();        
     }
 
     // Use this for initialization
@@ -69,36 +54,7 @@ public class WorldGenerator : MonoBehaviour
             DeleteWorld();
             GenerateWorld();
             resetWorld = false;
-        }
-
-        if (isDay)
-        {
-            sun.RotateAround(new Vector3(0.0f, 0.0f, 0.0f), Vector3.forward, rotationRate * Time.deltaTime);
-
-            // Going from -10 degrees -> 190 degrees
-            Vector3 rotation = sun.rotation.eulerAngles;                        
-            if (rotation.x > 190.0f)
-            {
-                isDay = false;
-                sun.gameObject.SetActive(false);
-                moon.gameObject.SetActive(true);
-                nightTimer = nightLength;
-                sun.rotation = Quaternion.Euler(-90.0f, 0, 0);
-            }                        
-        }
-        else
-        {
-            if (nightTimer > 0.0f)
-                nightTimer -= Time.deltaTime;
-            else
-            {
-                isDay = true;
-                sun.gameObject.SetActive(true);
-                moon.gameObject.SetActive(false);                
-                sun.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
-                sun.RotateAround(new Vector3(0.0f, 0.0f, 0.0f), Vector3.forward, -89.0f);
-            }                        
-        }
+        }        
     }
        
     /***************** Core Functions ************************/
@@ -121,6 +77,10 @@ public class WorldGenerator : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
+        foreach (Transform child in enemyGroup)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     public float HeightLookup(float x, float z)
@@ -142,6 +102,7 @@ public class WorldGenerator : MonoBehaviour
         {
             return hit.point.y;
         }
+        /*
         else
         {
             Debug.Log("Height lookup Error");
@@ -163,6 +124,8 @@ public class WorldGenerator : MonoBehaviour
             return closestTerrain.HeightLookup(x - closestTerrain.transform.position.x, z - closestTerrain.transform.position.z);
         
         }
+        */
+        return 0;
     }
 
     /*************** Generation Functions *********************/
@@ -381,7 +344,7 @@ public class WorldGenerator : MonoBehaviour
                 float y = HeightLookup(x, z);
 
                 newEnemy.transform.position = new Vector3(x, y, z);
-                newEnemy.transform.SetParent(terrain.transform);
+                newEnemy.transform.SetParent(enemyGroup);
             }
         }
 

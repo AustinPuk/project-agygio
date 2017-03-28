@@ -117,13 +117,11 @@ public class Enemy : MonoBehaviour
     }
 
     void Search()
-    {
-        // Enemies have larger sight at night (Temporary. TODO: Make better system)
-        float range = (WorldGenerator.instance.isDay) ? sightRange * 2 : sightRange;
+    {       
         // Player already targetted, check if still in range
         if (target)
         {
-            if (Vector3.Distance(target.position, transform.position) >= range)
+            if (Vector3.Distance(target.position, transform.position) >= sightRange)
             {
                 target = null;
                 patrolTimer = patrolInterval;
@@ -137,11 +135,11 @@ public class Enemy : MonoBehaviour
         {
             // Adjust sight based on which angle player is from enemy's front
             float angle = Mathf.Abs(Vector3.Angle(Player.instance.transform.position - transform.position, transform.forward));
-            float adjustedSight = range;
+            float adjustedSight = sightRange;
             if (angle > 45.0f && angle <= 90.0f || angle > 270.0f && angle < 315.0f)
-                adjustedSight = 0.5f * range;
+                adjustedSight = 0.5f * sightRange;
             else if (angle > 90.0f && angle <= 270.0f)
-                adjustedSight = 0.1f * range;
+                adjustedSight = 0.1f * sightRange;
 
             if (Vector3.Distance(Player.instance.transform.position, transform.position) < adjustedSight)
             {
@@ -161,11 +159,9 @@ public class Enemy : MonoBehaviour
         {
             attackTimer -= Time.deltaTime;
             return;
-        }
+        }        
 
-        float range = (WorldGenerator.instance.isDay) ? combatRange * 2 : combatRange;
-
-        if (Vector3.Distance(target.position, transform.position) < range)
+        if (Vector3.Distance(target.position, transform.position) < combatRange)
         {
             if (!projectile) // Melee
             {

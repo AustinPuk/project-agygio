@@ -80,11 +80,16 @@ public class Backpack : Window {
     }
     public void Clear()
     {
-        foreach (Item item in items)
+        Debug.Log("Clearing Inventory");
+
+        for (int i = 0; i < items.Count; i++)
         {
-            items.Remove(item);
-            Destroy(item.gameObject);
+            Item temp = items[i];
+            items[i] = null;
+            Destroy(temp.gameObject);
         }
+
+        items.Clear();
         UpdateInventory(filterType);
     }
 }

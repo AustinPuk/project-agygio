@@ -448,15 +448,16 @@ MonoBehaviour:
   craftMenuItem: 0
   requiredItemOne: {fileID: 114141389282370780, guid: 4c68dbbac51bfd64a99c93248eb4bbfd,
     type: 2}
-  numberItemOne: 2
+  numberItemOne: 5
   requiredItemTwo: {fileID: 114396111283057518, guid: 9c5072029251a2e4f8934f24b0ad3e11,
     type: 2}
-  numberItemTwo: 1
+  numberItemTwo: 5
   isHeld: 0
   inBackpack: 0
   canStore: 0
   isSelected: 0
   heldHand: {fileID: 0}
+  target: {fileID: 0}
   line: {fileID: 120506900262151868}
   radius: 0.05
 --- !u!120 &120506900262151868

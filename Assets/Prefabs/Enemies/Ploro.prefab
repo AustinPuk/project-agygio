@@ -299,7 +299,7 @@ MonoBehaviour:
   level: 1
   activeDist: 30
   attackSpeed: 1
-  combatRange: 1.2
+  combatRange: 1.5
   sightRange: 10
   patrolCenter: {fileID: 0}
   patrolRange: 10
@@ -308,8 +308,8 @@ MonoBehaviour:
   projectile: {fileID: 0}
   projectileLoc: {fileID: 0}
   STR: 5
-  DEX: 5
-  CON: 5
+  DEX: 3
+  CON: 10
   maxHealth: 0
   health: 0
   regenRate: 0
@@ -327,4 +327,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   height: 0.5
-  stopDistance: 1.2
+  stopDistance: 1.5

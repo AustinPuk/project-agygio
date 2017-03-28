@@ -330,7 +330,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
@@ -407,13 +407,13 @@ MonoBehaviour:
   initialActiveState: 0
   deactivateOnDrop: 1
   isDiscovered: 0
-  craftMenuItem: 0
+  craftMenuItem: 1
   requiredItemOne: {fileID: 114278203601868306, guid: 80dd306bb1a8f7d4499f2f26a867e649,
     type: 2}
-  numberItemOne: 50
+  numberItemOne: 100
   requiredItemTwo: {fileID: 114396111283057518, guid: 9c5072029251a2e4f8934f24b0ad3e11,
     type: 2}
-  numberItemTwo: 1
+  numberItemTwo: 100
   isHeld: 0
   inBackpack: 0
   canStore: 0
