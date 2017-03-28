@@ -41,16 +41,24 @@ public class Wand : Item
 
     private float chargeTimer;
 
+    public static Wand specialWand;
+
     [SerializeField]
-    bool specialWand;
+    bool isSpecialWand;
 
     private void Start()
     {
-        if (specialWand)
+        if (isSpecialWand)
         {
-            float y = WorldGenerator.instance.HeightLookup(transform.position.x, transform.position.z);
-            transform.position = new Vector3(transform.position.x, y + 0.1f, transform.position.z);
+            ResetPosition();
+            specialWand = this;
         }        
+    }
+
+    public void ResetPosition()
+    {
+        float y = WorldGenerator.instance.HeightLookup(transform.position.x, transform.position.z);
+        transform.position = new Vector3(transform.position.x, y + 0.1f, transform.position.z);
     }
 
     private void Shoot()

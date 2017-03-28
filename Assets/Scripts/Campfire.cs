@@ -20,7 +20,7 @@ public class Campfire : MonoBehaviour
     [SerializeField]
     private Light lit;
 
-    public float health;    
+    public float health;
 
     private void Awake()
     {
@@ -29,9 +29,13 @@ public class Campfire : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start () {
-        TurnFireOff();
+    void Start() {
+        ResetCampfire();
+    }
 
+    public void ResetCampfire()
+    {
+        TurnFireOff();
         float y = WorldGenerator.instance.HeightLookup(transform.position.x, transform.position.z);
         transform.position = new Vector3(transform.position.x, y + 0.1f, transform.position.z);
     }

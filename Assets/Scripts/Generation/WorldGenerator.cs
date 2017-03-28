@@ -53,6 +53,9 @@ public class WorldGenerator : MonoBehaviour
         {
             DeleteWorld();
             GenerateWorld();
+            Campfire.instance.ResetCampfire();
+            if (Wand.specialWand)
+                Wand.specialWand.ResetPosition();
             resetWorld = false;
         }        
     }

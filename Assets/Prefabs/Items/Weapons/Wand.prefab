@@ -426,8 +426,9 @@ MonoBehaviour:
   chargeMax: 3
   startParticles: {fileID: 1637301000852998}
   chargedParticles: {fileID: 1924005714922842}
-  baseDamage: 50
+  baseDamage: 20
   baseEffect: 3
+  isSpecialWand: 0
 --- !u!198 &198631502800559852
 ParticleSystem:
   m_ObjectHideFlags: 1
