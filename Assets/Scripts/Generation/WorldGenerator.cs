@@ -33,6 +33,9 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField]
     List<TerrainGenerator> terrains;
 
+    [SerializeField]
+    LayerMask terrainLayer;
+
     public bool isDay;
     private float nightTimer;
 
@@ -130,23 +133,36 @@ public class WorldGenerator : MonoBehaviour
         {
             Debug.Log("Error: Height Lookup Invalid");
             return 0.0f;
-        }            
-
-        // Finds nearest terrain
-        TerrainGenerator closestTerrain = terrains[1];
-        float minDist = Mathf.Infinity;
-        foreach (TerrainGenerator terrain in terrains)
-        {
-            float dist = Vector2.Distance(new Vector2(terrain.transform.position.x, terrain.transform.position.z), new Vector2(x, z));
-            if (dist < minDist)
-            {
-                closestTerrain = terrain;
-                minDist = dist;
-            }                
         }
 
-        //Debug.Log("World Height: " + x + " " + z + " " + closestTerrain);
-        return closestTerrain.HeightLookup(x - closestTerrain.transform.position.x, z - closestTerrain.transform.position.z);
+        Ray ray = new Ray(new Vector3(x, 100.0f, z), Vector3.down);
+        RaycastHit hit;
+        
+        if (Physics.Raycast(ray, out hit, 200.0f, terrainLayer))
+        {
+            return hit.point.y;
+        }
+        else
+        {
+            Debug.Log("Height lookup Error");
+            return 0;
+            // Finds nearest terrain
+            TerrainGenerator closestTerrain = terrains[1];
+            float minDist = Mathf.Infinity;
+            foreach (TerrainGenerator terrain in terrains)
+            {
+                float dist = Vector2.Distance(new Vector2(terrain.transform.position.x, terrain.transform.position.z), new Vector2(x, z));
+                if (dist < minDist)
+                {
+                    closestTerrain = terrain;
+                    minDist = dist;
+                }                
+            }
+
+            //Debug.Log("World Height: " + x + " " + z + " " + closestTerrain);
+            return closestTerrain.HeightLookup(x - closestTerrain.transform.position.x, z - closestTerrain.transform.position.z);
+        
+        }
     }
 
     /*************** Generation Functions *********************/
@@ -260,12 +276,11 @@ public class WorldGenerator : MonoBehaviour
             {
                 GameObject newTree = Instantiate(type.trees[Random.Range(0, type.trees.Length)]);
 
-                float x = Random.Range(min_x, max_x);
-                float z = Random.Range(min_z, max_z);
-                float y = terrain.HeightLookup(x, z);
+                float x = Random.Range(min_x, max_x) + terrain.transform.position.x;
+                float z = Random.Range(min_z, max_z) + terrain.transform.position.z;
+                float y = HeightLookup(x, z);
 
-                newTree.transform.position = new Vector3(x + terrain.transform.position.x, y, 
-                                                         z + terrain.transform.position.z);
+                newTree.transform.position = new Vector3(x, y, z);
                 newTree.transform.SetParent(terrain.transform);
             }
         }        
@@ -291,12 +306,11 @@ public class WorldGenerator : MonoBehaviour
             {
                 GameObject newRock = Instantiate(type.rocks[Random.Range(0, type.rocks.Length)]);
 
-                float x = Random.Range(min_x, max_x);
-                float z = Random.Range(min_z, max_z);
-                float y = terrain.HeightLookup(x, z);
+                float x = Random.Range(min_x, max_x) + terrain.transform.position.x;
+                float z = Random.Range(min_z, max_z) + terrain.transform.position.z;
+                float y = HeightLookup(x, z);
 
-                newRock.transform.position = new Vector3(x + terrain.transform.position.x, y,
-                                                         z + terrain.transform.position.z);
+                newRock.transform.position = new Vector3(x, y, z);
                 newRock.transform.SetParent(terrain.transform);
             }
         }
@@ -326,12 +340,11 @@ public class WorldGenerator : MonoBehaviour
             {
                 GameObject newItem = Instantiate(type.items[Random.Range(0, type.items.Length)]);
 
-                float x = Random.Range(min_x, max_x);
-                float z = Random.Range(min_z, max_z);
-                float y = terrain.HeightLookup(x, z) + itemOffest;
+                float x = Random.Range(min_x, max_x) + terrain.transform.position.x;
+                float z = Random.Range(min_z, max_z) + terrain.transform.position.z;
+                float y = HeightLookup(x, z) + itemOffest;
 
-                newItem.transform.position = new Vector3(x + terrain.transform.position.x, y,
-                                                         z + terrain.transform.position.z);
+                newItem.transform.position = new Vector3(x, y, z);
                 newItem.transform.SetParent(terrain.transform);
             }
         }
@@ -363,12 +376,11 @@ public class WorldGenerator : MonoBehaviour
             {
                 GameObject newEnemy = Instantiate(type.enemies[Random.Range(0, type.enemies.Length)]);
 
-                float x = Random.Range(min_x, max_x);
-                float z = Random.Range(min_z, max_z);
-                float y = terrain.HeightLookup(x, z);
+                float x = Random.Range(min_x, max_x) + terrain.transform.position.x;
+                float z = Random.Range(min_z, max_z) + terrain.transform.position.z;
+                float y = HeightLookup(x, z);
 
-                newEnemy.transform.position = new Vector3(x + terrain.transform.position.x, y,
-                                                         z + terrain.transform.position.z);
+                newEnemy.transform.position = new Vector3(x, y, z);
                 newEnemy.transform.SetParent(terrain.transform);
             }
         }

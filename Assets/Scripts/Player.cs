@@ -27,7 +27,9 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     private Transform respawnLoc;
-            
+
+    public bool hasLight;
+                
     static public bool gamePause;
     static public bool canMove;
 
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour {
 
         if (!gamePause)
         {
+            CheckLight();
             Regen(Time.deltaTime);
             CheckDeath();
         }        		        
@@ -73,6 +76,27 @@ public class Player : MonoBehaviour {
     {
         if (health <= 0.0f)
             OnDeath();        
+    }
+
+    void CheckLight()
+    {
+        hasLight = false;
+
+        if (VRControls.instance.rightHand.getHeldItem())
+        {
+            if (VRControls.instance.rightHand.getHeldItem().itemName == "Torch")
+                hasLight = true;
+        }
+        if (VRControls.instance.leftHand.getHeldItem())
+        {
+            if (VRControls.instance.leftHand.getHeldItem().itemName == "Torch")
+                hasLight = true;
+        }
+        if (Campfire.instance.isLit)
+        {
+            if (Vector3.Distance(transform.position, Campfire.instance.transform.position) < 10.0f)
+                hasLight = true;
+        }
     }
 
     /***************************** Player Event Functions *************************/

@@ -82,10 +82,11 @@ public class Enemy : MonoBehaviour
         if (Player.gamePause)
             return;
 
+        CheckDeath();
+
         if (!CheckActive())
             return;
-
-        CheckDeath();
+        
         Regen(Time.deltaTime);
 
         Search();
@@ -217,15 +218,7 @@ public class Enemy : MonoBehaviour
     {
         //Debug.Log("Enemy: Stopping");
         agent.Stop();
-    }
-    
-    void ChangeLevel(int lvl)
-    {
-        level = lvl;
-        maxHealth = ((8.6f * level) + 20.0f) * (CON / 7.0f);
-        baseDamage = ((1.5f * level) + 8.5f) * (STR / 7.0f);
-        regenRate = ((0.5f * level) + 9.5f) * (CON / 7.0f);
-    }    
+    }        
 
     IEnumerator KnockBack(Vector3 direction)
     {
@@ -246,5 +239,13 @@ public class Enemy : MonoBehaviour
         StartCoroutine(KnockBack(Vector3.Normalize(Player.instance.transform.position - transform.position)));
 
         // Targets Player
+    }
+
+    public void ChangeLevel(int lvl)
+    {
+        level = lvl;
+        maxHealth = ((8.6f * level) + 20.0f) * (CON / 7.0f);
+        baseDamage = ((1.5f * level) + 8.5f) * (STR / 7.0f);
+        regenRate = ((0.5f * level) + 9.5f) * (CON / 7.0f);
     }
 }

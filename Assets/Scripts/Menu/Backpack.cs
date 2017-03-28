@@ -82,7 +82,9 @@ public class Backpack : Window {
     {
         foreach (Item item in items)
         {
-            DeleteItem(item.itemName);
+            items.Remove(item);
+            Destroy(item.gameObject);
         }
+        UpdateInventory(filterType);
     }
 }
